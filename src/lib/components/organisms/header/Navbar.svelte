@@ -9,7 +9,6 @@
   export let onViewChange: (view: 'home' | 'admin') => void = () => {};
 
   let mobileMenuOpen = false;
-  let currencyDropdownOpen = false;
 
   // Active section tracking
   let currentActiveSection = 'hero';
@@ -34,13 +33,8 @@
     activeModal.set('supplier');
   }
 
-  function toggleCurrencyDropdown() {
-    currencyDropdownOpen = !currencyDropdownOpen;
-  }
-
-  function setCurrency(c: 'USD' | 'IDR') {
-    currentCurrency.set(c);
-    currencyDropdownOpen = false;
+  function toggleCurrency() {
+    currentCurrency.update((c) => (c === 'USD' ? 'IDR' : 'USD'));
   }
 
   onMount(() => {
@@ -163,7 +157,7 @@
         <button
           type="button"
           on:click={openSupplier}
-          class="text-sm font-semibold tracking-wide text-amber-300 hover:text-amber-200 transition-colors py-2 flex items-center gap-1"
+          class="text-sm font-semibold tracking-wide text-amber-300 hover:text-amber-200 transition-colors py-2 flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-400/10 border border-amber-300/30"
         >
           <svg class="w-4 h-4 text-[#C88A2E]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
@@ -172,104 +166,42 @@
         </button>
       </nav>
 
-      <!-- Desktop Action Buttons: Currency Selector, Cart & Supplier CTA -->
-      <div class="hidden sm:flex items-center gap-3 whitespace-nowrap flex-shrink-0">
-        
-        <!-- Multi-Currency Selector Dropdown (USD & IDR) -->
-        <div class="relative">
-          <button
-            type="button"
-            on:click={toggleCurrencyDropdown}
-            class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/20 backdrop-blur-md transition-all active:scale-95 shadow-sm min-h-[46px]"
-            title="Pilih Mata Uang Tampilan (USD / IDR)"
-          >
-            <span class="text-amber-300">{$currentCurrency === 'USD' ? '🇺🇸' : '🇮🇩'}</span>
-            <span class="font-mono tracking-wider">{$currentCurrency}</span>
-            <svg class="w-3.5 h-3.5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
-            </svg>
-          </button>
+      <!-- Unified Header Right Actions (Clean, Non-Duplicating at any Zoom level) -->
+      <div class="flex items-center gap-2.5 sm:gap-3 flex-shrink-0">
+        <!-- Currency Toggle Pill ($currentCurrency: USD / IDR) -->
+        <button
+          type="button"
+          on:click={toggleCurrency}
+          class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/20 backdrop-blur-md transition-all active:scale-95 shadow-sm min-h-[42px]"
+          title="Ganti mata uang (USD / IDR)"
+        >
+          <span class="text-amber-300">{$currentCurrency === 'USD' ? '🇺🇸' : '🇮🇩'}</span>
+          <span class="font-mono tracking-wider font-extrabold text-xs">{$currentCurrency}</span>
+        </button>
 
-          {#if currencyDropdownOpen}
-            <div class="absolute right-0 mt-2 w-36 rounded-2xl bg-[#0B2D24] border border-[#C88A2E]/50 shadow-2xl p-1.5 z-50 text-xs">
-              <button
-                type="button"
-                on:click={() => setCurrency('USD')}
-                class="w-full text-left px-3 py-2 rounded-xl font-bold flex items-center justify-between transition-colors {$currentCurrency === 'USD' ? 'bg-[#C88A2E] text-white' : 'text-gray-200 hover:bg-white/10'}"
-              >
-                <span>🇺🇸 USD ($)</span>
-                {#if $currentCurrency === 'USD'}<span>✓</span>{/if}
-              </button>
-              <button
-                type="button"
-                on:click={() => setCurrency('IDR')}
-                class="w-full text-left px-3 py-2 rounded-xl font-bold flex items-center justify-between transition-colors {$currentCurrency === 'IDR' ? 'bg-[#C88A2E] text-white' : 'text-gray-200 hover:bg-white/10'}"
-              >
-                <span>🇮🇩 IDR (Rp)</span>
-                {#if $currentCurrency === 'IDR'}<span>✓</span>{/if}
-              </button>
-            </div>
-          {/if}
-        </div>
-
-        <!-- Order Catalog Cart Button with Live Counter Badge -->
+        <!-- Cart Icon Button with Badge Counter -->
         <button
           type="button"
           on:click={openCart}
-          class="relative inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/20 backdrop-blur-md transition-all active:scale-95 shadow-sm min-h-[46px]"
-        >
-          <svg class="w-4 h-4 text-[#C88A2E] flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
-          </svg>
-          <span class="tracking-wide">Keranjang Order</span>
-          {#if $cartCount > 0}
-            <span class="px-2 py-0.5 rounded-full bg-[#C88A2E] text-white font-extrabold text-[11px] shadow-sm animate-pulse">
-              {$cartCount}
-            </span>
-          {/if}
-        </button>
-
-        <!-- Ajukan Suplai CTA for Farmers / Suppliers -->
-        <GoldButton size="sm" className="min-h-[46px] px-5 shadow-md text-xs font-bold tracking-wide" on:click={openSupplier}>
-          <svg class="w-4 h-4 mr-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-          </svg>
-          Ajukan Suplai
-        </GoldButton>
-      </div>
-
-      <!-- Mobile Controls (< 1280px) -->
-      <div class="flex items-center gap-2 xl:hidden">
-        <!-- Mobile Currency Toggle -->
-        <button
-          type="button"
-          on:click={() => currentCurrency.update((c) => (c === 'USD' ? 'IDR' : 'USD'))}
-          class="px-2.5 py-1.5 rounded-xl bg-white/10 text-white border border-white/15 text-xs font-bold"
-          title="Ganti mata uang"
-        >
-          {$currentCurrency}
-        </button>
-
-        <button
-          type="button"
-          on:click={openCart}
-          class="relative p-2.5 rounded-xl bg-white/10 text-white border border-white/15"
+          class="relative p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md transition-all active:scale-95 shadow-sm min-h-[42px] flex items-center justify-center"
           aria-label="Keranjang Order"
+          title="Buka Keranjang Order"
         >
           <svg class="w-5 h-5 text-[#C88A2E]" viewBox="0 0 20 20" fill="currentColor">
             <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
           </svg>
           {#if $cartCount > 0}
-            <span class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#C88A2E] text-white text-[10px] font-bold flex items-center justify-center">
+            <span class="absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1 rounded-full bg-[#C88A2E] text-white text-[10px] font-black flex items-center justify-center shadow-md animate-pulse">
               {$cartCount}
             </span>
           {/if}
         </button>
 
+        <!-- Mobile / Zoomed Hamburger Button (hidden on large desktop) -->
         <button
           type="button"
           on:click={() => (mobileMenuOpen = !mobileMenuOpen)}
-          class="p-2.5 rounded-xl bg-white/10 text-white border border-white/15 focus:outline-none"
+          class="xl:hidden p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 focus:outline-none transition-colors min-h-[42px] flex items-center justify-center"
           aria-label="Menu Navigasi"
         >
           <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -319,9 +251,10 @@
       <button
         type="button"
         on:click={() => { mobileMenuOpen = false; openSupplier(); }}
-        class="w-full text-left py-2.5 px-3 rounded-lg text-sm font-bold text-amber-300 hover:bg-white/5"
+        class="w-full text-left py-2.5 px-3 rounded-lg text-sm font-bold text-amber-300 hover:bg-white/5 flex items-center justify-between"
       >
-        Portal Suplai Petani
+        <span>Portal Suplai Petani</span>
+        <span class="text-xs text-amber-400">&rarr;</span>
       </button>
 
       <div class="pt-2 border-t border-white/10 flex flex-col gap-2">
