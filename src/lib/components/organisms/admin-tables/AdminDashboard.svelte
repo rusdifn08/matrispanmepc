@@ -54,13 +54,15 @@
     isReportModalOpen = true;
   }
 
+  import { apiClient } from '../../../api/client';
+
   // Live Backend Telemetry State
   let backendTelemetry: any = null;
   async function fetchBackendTelemetry() {
     try {
-      const res = await fetch('http://127.0.0.1:8080/api/metrics');
-      if (res.ok) {
-        backendTelemetry = await res.json();
+      const data = await apiClient.getMetrics();
+      if (data) {
+        backendTelemetry = data;
       }
     } catch (e) {
       // Backend may be starting or offline

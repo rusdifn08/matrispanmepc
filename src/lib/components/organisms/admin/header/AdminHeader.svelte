@@ -1,6 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import type { UserProfileDto } from '../../../../types';
+  import { BACKEND_URL } from '../../../../api/client';
 
   export let backendTelemetry: any = null;
   export let isSyncing: boolean = false;
@@ -42,10 +43,10 @@
       <!-- Live Backend Status Pill -->
       <div
         class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 font-mono text-[11px]"
-        title="Backend Axum Port 8080 Live Polling"
+        title="Backend Axum Live Polling ({BACKEND_URL})"
       >
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span>Axum 8080 Terhubung</span>
+        <span>{BACKEND_URL.includes('onrender.com') ? 'Render Axum Online' : 'Axum 8080 Online'}</span>
         <button
           type="button"
           on:click={() => dispatch('sync')}
@@ -60,11 +61,11 @@
 
       <!-- Axum Telemetry Shortcut Pill -->
       <a
-        href="http://127.0.0.1:8080/dashboard"
+        href="{BACKEND_URL}/dashboard"
         target="_blank"
         rel="noopener noreferrer"
         class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-emerald-900/60 hover:bg-emerald-800 border border-emerald-500/40 text-emerald-300 font-mono text-[11px] transition shadow-sm"
-        title="Buka Rust Axum Server Performance Dashboard"
+        title="Buka Rust Axum Server Performance Dashboard ({BACKEND_URL}/dashboard)"
       >
         <span class="text-amber-400 font-bold">⚡ {backendTelemetry ? `${backendTelemetry.avg_latency_ms.toFixed(1)}ms` : '<1ms'}</span>
         <span class="px-1.5 py-0.2 rounded bg-emerald-700 text-white text-[9px] font-sans font-bold">Axum UI</span>

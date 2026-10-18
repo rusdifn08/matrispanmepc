@@ -11,7 +11,9 @@ import type {
   SecurityTestReport,
 } from '../types';
 
-const API_BASE = 'http://127.0.0.1:8080/api';
+const RAW_URL = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) || 'https://backend-matrispanmepc.onrender.com';
+export const BACKEND_URL = RAW_URL.replace(/\/api\/?$/, '').replace(/\/+$/, '');
+export const API_BASE = `${BACKEND_URL}/api`;
 
 let authToken: string | null = typeof localStorage !== 'undefined' ? localStorage.getItem('mepc_jwt_token') : null;
 
@@ -285,6 +287,16 @@ export const apiClient = {
   async getStats(): Promise<DashboardStats | null> {
     try {
       const res = await fetch(`${API_BASE}/stats`);
+      if (res.ok) return await res.json();
+    } catch {
+      // Fallback
+    }
+    return null;
+  },
+
+  async getMetrics(): Promise<any> {
+    try {
+      const res = await fetch(`${API_BASE}/metrics`);
       if (res.ok) return await res.json();
     } catch {
       // Fallback

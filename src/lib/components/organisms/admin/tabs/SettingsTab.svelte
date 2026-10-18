@@ -12,6 +12,7 @@
     toastAction,
   } from '../../../../stores';
   import { formatDate } from '../../../../utils';
+  import { BACKEND_URL } from '../../../../api/client';
 
   export let lastSyncTime: string = '';
 
@@ -63,7 +64,7 @@
       <div>
         <div class="text-xs font-bold text-emerald-950 flex items-center gap-1.5">
           <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-          REST API http://127.0.0.1:8080 Siap Siaga
+          REST API {BACKEND_URL} Siap Siaga
         </div>
         <p class="text-[11px] text-emerald-700 mt-0.5">
           Sinkronisasi otomatis setiap 8 detik. Terakhir disinkronkan pukul: <strong>{lastSyncTime}</strong> WIB.

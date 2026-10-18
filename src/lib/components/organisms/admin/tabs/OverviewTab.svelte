@@ -12,6 +12,7 @@
   import type { BuyerOrder } from '../../../../types';
   import { formatDate, getWhatsAppChatUrl } from '../../../../utils';
   import StatusBadge from '../../../atoms/badges/StatusBadge.svelte';
+  import { BACKEND_URL } from '../../../../api/client';
 
   export let backendTelemetry: any = null;
 
@@ -331,7 +332,7 @@
             <span>Rust Axum Telemetry</span>
           </span>
           <a
-            href="http://127.0.0.1:8080/dashboard"
+            href="{BACKEND_URL}/dashboard"
             target="_blank"
             rel="noopener noreferrer"
             class="text-[11px] text-[#C88A2E] font-bold hover:underline"
