@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-emerald: #0B2D24;
+    --color-emerald-dark: #071f19;
+    --color-emerald-light: #164f40;
+    --color-gold: #C88A2E;
+    --color-gold-hover: #b07521;
+    --color-gold-light: #dfa44c;
+    --color-navy: #0F3E52;
+    --color-cream: #F8F6F0;
+    --color-cream-card: #FAF8F4;
+    --color-whatsapp: #16A34A;
+    --color-whatsapp-hover: #15803d;
+  }
+
+  body {
+    background-color: #F8F6F0;
+    color: #1f2937;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-heading {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  .font-serif-title {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+/* Custom Utilities for PT MEPC Identity */
+.bg-mepc-emerald {
+  background-color: #0B2D24;
+}
+
+.text-mepc-emerald {
+  color: #0B2D24;
+}
+
+.border-mepc-emerald {
+  border-color: #0B2D24;
+}
+
+.bg-mepc-gold {
+  background-color: #C88A2E;
+}
+
+.text-mepc-gold {
+  color: #C88A2E;
+}
+
+.border-mepc-gold {
+  border-color: #C88A2E;
+}
+
+.bg-mepc-navy {
+  background-color: #0F3E52;
+}
+
+.text-mepc-navy {
+  color: #0F3E52;
+}
+
+.bg-mepc-cream {
+  background-color: #F8F6F0;
+}
+
+.bg-mepc-cream-card {
+  background-color: #FAF8F4;
+}
+
+.bg-mepc-whatsapp {
+  background-color: #16A34A;
+}
+
+.text-mepc-whatsapp {
+  color: #16A34A;
+}
+
+/* Glassmorphism navbar styling */
+.glassmorphism {
+  background: rgba(11, 45, 36, 0.90);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(200, 138, 46, 0.25);
+}
+
+.glassmorphism-light {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(229, 231, 235, 0.7);
+}
+
+/* Print Specific Rules for Official PDF / Proforma Invoices */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .print-page-break {
+    page-break-after: always;
+  }
+
+  @page {
+    size: A4;
+    margin: 1.5cm;
+  }
+}
