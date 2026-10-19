@@ -3,7 +3,7 @@ import { playNotificationChime } from '../utils';
 
 import type { Product } from '../types';
 
-export const adminDashboardMenu = writable<'overview' | 'orders' | 'suppliers' | 'messages' | 'invoices' | 'catalog' | 'settings'>('overview');
+export const adminDashboardMenu = writable<'overview' | 'sales_analytics' | 'orders' | 'suppliers' | 'messages' | 'invoices' | 'catalog' | 'settings'>('overview');
 
 export const currentCurrency = writable<'USD' | 'IDR'>('USD');
 export const usdExchangeRate = writable<number>(16250);

@@ -47,12 +47,22 @@ export const apiClient = {
     const res = await fetch(`${API_BASE}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        identifier: payload.identifier,
+        username: payload.identifier,
+        password: payload.password,
+      }),
     });
 
-    const data = await res.json();
+    let data: any = {};
+    try {
+      data = await res.json();
+    } catch {
+      data = { message: `Gagal menghubungkan ke server (${res.status} ${res.statusText})` };
+    }
+
     if (!res.ok) {
-      throw new Error(data.error || 'Login gagal');
+      throw new Error(data.message || data.error || `Login gagal (${res.status})`);
     }
 
     if (data.token) {

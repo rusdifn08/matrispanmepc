@@ -21,8 +21,9 @@
   import { playNotificationChime } from '../../../utils';
 
   import AdminHeader from '../admin/header/AdminHeader.svelte';
-  import AdminNavStrip from '../admin/navigation/AdminNavStrip.svelte';
+  import AdminSidebar from '../admin/navigation/AdminSidebar.svelte';
   import OverviewTab from '../admin/tabs/OverviewTab.svelte';
+  import SalesAnalyticsTab from '../admin/tabs/SalesAnalyticsTab.svelte';
   import OrdersTab from '../admin/tabs/OrdersTab.svelte';
   import MessagesTab from '../admin/tabs/MessagesTab.svelte';
   import SuppliersTab from '../admin/tabs/SuppliersTab.svelte';
@@ -37,9 +38,11 @@
 
   export let onBackToHome: () => void = () => {};
 
-  // Active Menu: 'overview' | 'orders' | 'suppliers' | 'messages' | 'invoices' | 'catalog' | 'settings'
-  let currentMenu: 'overview' | 'orders' | 'suppliers' | 'messages' | 'invoices' | 'catalog' | 'settings' = 'overview';
+  // Active Menu: 'overview' | 'sales_analytics' | 'orders' | 'suppliers' | 'messages' | 'invoices' | 'catalog' | 'settings'
+  let currentMenu: 'overview' | 'sales_analytics' | 'orders' | 'suppliers' | 'messages' | 'invoices' | 'catalog' | 'settings' = 'overview';
   $: currentMenu = $adminDashboardMenu;
+
+  let isSidebarOpenMobile = false;
 
   function setMenu(menu: typeof currentMenu) {
     adminDashboardMenu.set(menu);
@@ -154,15 +157,19 @@
   }
 </script>
 
-<div class="min-h-screen bg-[#F4F6F8] pb-16">
-  <!-- TOP EXECUTIVE BANNER -->
-  <AdminHeader
-    {backendTelemetry}
-    {isSyncing}
+<div class="min-h-screen bg-[#F4F6F8] flex flex-col lg:flex-row">
+  <!-- Professional Enterprise Left Sidebar -->
+  <AdminSidebar
+    {currentMenu}
+    pendingOrdersCount={$pendingOrdersCount}
+    unreadMessagesCount={$unreadMessagesCount}
+    pendingSuppliersCount={$pendingSuppliersCount}
+    invoicesCount={$invoicesStore.length}
     currentUser={$currentUser}
-    on:sync={() => triggerSync(true)}
+    isOpenMobile={isSidebarOpenMobile}
+    on:changeMenu={(e) => setMenu(e.detail)}
+    on:closeMobile={() => (isSidebarOpenMobile = false)}
     on:openReport={() => openReportModal('orders')}
-    on:testChime={testChime}
     on:backToHome={onBackToHome}
     on:logout={() => {
       authActions.logout();
@@ -170,68 +177,85 @@
     }}
   />
 
-  <!-- MAIN NAVIGATION TABS -->
-  <AdminNavStrip
-    {currentMenu}
-    pendingOrdersCount={$pendingOrdersCount}
-    unreadMessagesCount={$unreadMessagesCount}
-    pendingSuppliersCount={$pendingSuppliersCount}
-    invoicesCount={$invoicesStore.length}
-    on:changeMenu={(e) => setMenu(e.detail)}
-  />
+  <!-- Main Right Content Column -->
+  <div class="flex-1 flex flex-col min-w-0 min-h-screen pb-16">
+    <!-- Top Executive Header Bar -->
+    <AdminHeader
+      {backendTelemetry}
+      {isSyncing}
+      currentUser={$currentUser}
+      on:toggleSidebar={() => (isSidebarOpenMobile = !isSidebarOpenMobile)}
+      on:sync={() => triggerSync(true)}
+      on:openReport={() => openReportModal('orders')}
+      on:testChime={testChime}
+      on:backToHome={onBackToHome}
+      on:logout={() => {
+        authActions.logout();
+        onBackToHome();
+      }}
+    />
 
-  <!-- CONTENT CONTAINER -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-    {#if currentMenu === 'overview'}
-      <OverviewTab
-        {backendTelemetry}
-        on:changeMenu={(e) => setMenu(e.detail)}
-        on:openReport={(e) => openReportModal(e.detail)}
-        on:openOrderDetail={(e) => handleOpenOrderDetail(e.detail)}
-        on:approveOrder={(e) => orderActions.approveOrder(e.detail)}
-      />
-    {:else if currentMenu === 'orders'}
-      <OrdersTab
-        on:openOrderDetail={(e) => handleOpenOrderDetail(e.detail)}
-        on:openReport={(e) => openReportModal(e.detail)}
-        on:approveOrder={(e) => orderActions.approveOrder(e.detail)}
-        on:rejectOrder={(e) => {
-          if (confirm('Konfirmasi tolak pesanan ini?')) {
-            orderActions.rejectOrder(e.detail);
-          }
-        }}
-      />
-    {:else if currentMenu === 'messages'}
-      <MessagesTab
-        on:openMessageDetail={(e) => handleOpenMessageDetail(e.detail)}
-      />
-    {:else if currentMenu === 'suppliers'}
-      <SuppliersTab
-        on:openReport={(e) => openReportModal(e.detail)}
-        on:approveSupplier={(e) => supplierActions.approveRequest(e.detail)}
-        on:rejectSupplier={(e) => {
-          if (confirm('Konfirmasi tolak/arsip pengajuan mitra ini?')) {
-            supplierActions.rejectRequest(e.detail);
-          }
-        }}
-      />
-    {:else if currentMenu === 'invoices'}
-      <InvoicesTab
-        on:openReport={(e) => openReportModal(e.detail)}
-        on:viewInvoice={(e) => handleViewInvoice(e.detail)}
-      />
-    {:else if currentMenu === 'catalog'}
-      <CatalogTab
-        on:openProductEdit={(e) => handleOpenProductEdit(e.detail)}
-      />
-    {:else if currentMenu === 'settings'}
-      <SettingsTab
-        {lastSyncTime}
-        on:sync={() => triggerSync(true)}
-        on:testChime={testChime}
-      />
-    {/if}
-  </main>
+    <!-- Main Content Container -->
+    <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 flex-1">
+      {#if currentMenu === 'overview'}
+        <OverviewTab
+          {backendTelemetry}
+          on:changeMenu={(e) => setMenu(e.detail)}
+          on:openReport={(e) => openReportModal(e.detail)}
+          on:openOrderDetail={(e) => handleOpenOrderDetail(e.detail)}
+          on:approveOrder={(e) => orderActions.approveOrder(e.detail)}
+        />
+      {:else if currentMenu === 'sales_analytics'}
+        <SalesAnalyticsTab
+          currentUser={$currentUser}
+          on:changeMenu={(e) => setMenu(e.detail)}
+          on:openReport={(e) => openReportModal(e.detail)}
+        />
+      {:else if currentMenu === 'orders'}
+        <OrdersTab
+          on:openOrderDetail={(e) => handleOpenOrderDetail(e.detail)}
+          on:openReport={(e) => openReportModal(e.detail)}
+          on:approveOrder={(e) => orderActions.approveOrder(e.detail)}
+          on:rejectOrder={(e) => {
+            if (confirm('Konfirmasi tolak pesanan ini?')) {
+              orderActions.rejectOrder(e.detail);
+            }
+          }}
+        />
+      {:else if currentMenu === 'messages'}
+        <MessagesTab
+          on:openMessageDetail={(e) => handleOpenMessageDetail(e.detail)}
+        />
+      {:else if currentMenu === 'suppliers'}
+        <SuppliersTab
+          on:openReport={(e) => openReportModal(e.detail)}
+          on:approveSupplier={(e) => supplierActions.approveRequest(e.detail)}
+          on:rejectSupplier={(e) => {
+            if (confirm('Konfirmasi tolak/arsip pengajuan mitra ini?')) {
+              supplierActions.rejectRequest(e.detail);
+            }
+          }}
+        />
+      {:else if currentMenu === 'invoices'}
+        <InvoicesTab
+          currentUser={$currentUser}
+          on:changeMenu={(e) => setMenu(e.detail)}
+          on:openReport={(e) => openReportModal(e.detail)}
+          on:viewInvoice={(e) => handleViewInvoice(e.detail)}
+        />
+      {:else if currentMenu === 'catalog'}
+        <CatalogTab
+          on:openProductEdit={(e) => handleOpenProductEdit(e.detail)}
+        />
+      {:else if currentMenu === 'settings'}
+        <SettingsTab
+          {lastSyncTime}
+          on:sync={() => triggerSync(true)}
+          on:testChime={testChime}
+        />
+      {/if}
+    </main>
+  </div>
 </div>
 
 <!-- MODALS -->

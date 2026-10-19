@@ -141,11 +141,11 @@
     </div>
   </div>
 
-  <!-- Departemen & Role RBAC -->
+  <!-- Bagian / Departemen & Jabatan / Role RBAC -->
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
     <div>
       <label for="reg-dept" class="text-xs font-semibold text-gray-700 block mb-1">
-        Departemen / Divisi *
+        Bagian / Departemen *
       </label>
       <select
         id="reg-dept"
@@ -163,7 +163,7 @@
 
     <div>
       <label for="reg-role" class="text-xs font-semibold text-gray-700 block mb-1">
-        Peran Sistem (RBAC) *
+        Jabatan / Tingkat Akses (RBAC) *
       </label>
       <select
         id="reg-role"
@@ -171,12 +171,12 @@
         class="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#C88A2E]/50 focus:border-[#C88A2E]"
         required
       >
-        <option value="EXPORT_STAFF">EXPORT_STAFF (Staf Operasional)</option>
-        <option value="EXPORT_MANAGER">EXPORT_MANAGER (Manajer Ekspor)</option>
-        <option value="LOGISTICS_OFFICER">LOGISTICS_OFFICER (Logistik Belawan)</option>
-        <option value="SOURCING_OFFICER">SOURCING_OFFICER (Kemitraan Suplai)</option>
-        <option value="FINANCE_OFFICER">FINANCE_OFFICER (Keuangan & Invoice)</option>
-        <option value="SUPER_ADMIN">SUPER_ADMIN (Akses Penuh Direksi)</option>
+        <option value="EXPORT_STAFF">Staff Operasional Ekspor</option>
+        <option value="EXPORT_MANAGER">Manajer Operasional Ekspor</option>
+        <option value="LOGISTICS_OFFICER">Staff Logistik Pelabuhan Belawan</option>
+        <option value="SOURCING_OFFICER">Staff Sourcing & Kemitraan Petani</option>
+        <option value="FINANCE_OFFICER">Staff Keuangan & Devisa Kargo</option>
+        <option value="SUPER_ADMIN">Owner & Direktur Utama (Akses Penuh)</option>
       </select>
     </div>
   </div>

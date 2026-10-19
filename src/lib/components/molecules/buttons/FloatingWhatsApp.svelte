@@ -7,7 +7,7 @@
   $: waUrl = getWhatsAppAdminUrl(message);
 </script>
 
-<aside class="fixed bottom-6 right-5 sm:bottom-8 sm:right-8 z-40 flex items-center gap-2 group select-none pointer-events-auto" aria-label="WhatsApp Hotline Chat PT. MEPC">
+<aside class="fixed bottom-24 right-4 sm:bottom-8 sm:right-8 z-40 flex items-center gap-2 group select-none pointer-events-auto" aria-label="WhatsApp Hotline Chat PT. MEPC">
   <!-- Tooltip Bubble on Hover -->
   <div class="hidden sm:flex items-center px-3.5 py-1.5 rounded-full bg-white/95 text-[#0B2D24] text-xs font-bold shadow-xl border border-emerald-100 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-3 group-hover:translate-x-0 pointer-events-none whitespace-nowrap">
     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping mr-2"></span>

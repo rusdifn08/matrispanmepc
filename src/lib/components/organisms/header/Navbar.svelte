@@ -168,21 +168,23 @@
 
       <!-- Unified Header Right Actions (Clean, Non-Duplicating at any Zoom level) -->
       <div class="flex items-center gap-2.5 sm:gap-3 flex-shrink-0">
-        <!-- Compact Currency Switcher ($ vs Rp only) -->
+        <!-- Single Currency Icon Button Toggle ($ <-> Rp) -->
         <button
           type="button"
           on:click={toggleCurrency}
-          class="inline-flex items-center gap-1 px-2 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-mono text-xs border border-white/20 backdrop-blur-md transition-all active:scale-95 shadow-sm min-h-[40px]"
-          title="Ganti mata uang ($ Dollar / Rp Rupiah)"
-          aria-label="Toggle Mata Uang"
+          class="w-10 h-10 sm:w-10 sm:h-10 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md transition-all active:scale-90 shadow-sm flex items-center justify-center group flex-shrink-0"
+          title="Mata uang saat ini: {$currentCurrency}. Klik untuk beralih ke {$currentCurrency === 'USD' ? 'Rupiah (Rp)' : 'Dollar ($)'}"
+          aria-label="Ganti Mata Uang"
         >
-          <span class="w-6 h-6 rounded-lg flex items-center justify-center font-black text-xs transition-all {$currentCurrency === 'USD' ? 'bg-[#C88A2E] text-white shadow-sm' : 'text-gray-400'}">
-            $
-          </span>
-          <span class="text-gray-500 text-[10px] font-sans font-light select-none">|</span>
-          <span class="px-1.5 h-6 rounded-lg flex items-center justify-center font-bold text-[11px] transition-all {$currentCurrency === 'IDR' ? 'bg-[#C88A2E] text-white shadow-sm' : 'text-gray-400'}">
-            Rp
-          </span>
+          {#if $currentCurrency === 'USD'}
+            <span class="w-7 h-7 rounded-lg bg-gradient-to-tr from-[#C88A2E] to-amber-400 text-white font-black font-mono text-sm flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+              $
+            </span>
+          {:else}
+            <span class="w-7 h-7 rounded-lg bg-gradient-to-tr from-emerald-600 to-teal-500 text-white font-black font-mono text-xs flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+              Rp
+            </span>
+          {/if}
         </button>
 
         <!-- Cart Icon Button with Badge Counter -->

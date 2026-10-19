@@ -2,13 +2,52 @@
   import { createEventDispatcher } from 'svelte';
   import { invoicesStore } from '../../../../stores';
   import { formatDate } from '../../../../utils';
+  import type { UserProfileDto } from '../../../../types';
+
+  export let currentUser: UserProfileDto | null = null;
 
   const dispatch = createEventDispatcher<{
     openReport: 'balance';
     viewInvoice: any;
+    changeMenu: string;
   }>();
+
+  $: isAuthorized = currentUser?.role === 'SUPER_ADMIN' || currentUser?.role === 'FINANCE_OFFICER';
 </script>
 
+{#if !isAuthorized}
+  <!-- RESTRICTED ACCESS SCREEN (FOR NON-AUTHORIZED ROLES) -->
+  <div class="bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-rose-200 text-center max-w-2xl mx-auto my-8">
+    <div class="w-16 h-16 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center mx-auto mb-5 shadow-inner">
+      <svg class="w-8 h-8" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M10 2a5 5 0 00-5 5v3H4a2 2 0 00-2 2v5a2 2 0 002 2h12a2 2 0 002-2v-5a2 2 0 00-2-2h-1V7a5 5 0 00-5-5zm3 8V7a3 3 0 10-6 0v3h6z" clip-rule="evenodd"/>
+      </svg>
+    </div>
+
+    <span class="px-3 py-1 rounded-full text-xs font-black bg-rose-100 text-rose-700 tracking-wider uppercase">
+      Akses Terbatas • Modul Keuangan
+    </span>
+
+    <h2 class="text-xl sm:text-2xl font-bold font-heading text-gray-900 mt-4">
+      Otorisasi Keuangan & Devisa Diperlukan
+    </h2>
+
+    <p class="text-sm text-gray-600 max-w-lg mx-auto mt-2 leading-relaxed">
+      Dokumen <strong>Proforma Invoice & Neraca Keuangan</strong> hanya dapat diakses oleh 
+      <strong>Owner / Direktur Utama</strong> atau <strong>Divisi Keuangan PT. MEPC</strong>.
+    </p>
+
+    <div class="mt-6">
+      <button
+        type="button"
+        on:click={() => dispatch('changeMenu', 'overview')}
+        class="px-5 py-2.5 rounded-xl bg-[#0B2D24] text-white font-bold text-xs hover:bg-[#124235] transition shadow-md"
+      >
+        Kembali ke Ringkasan Eksekutif
+      </button>
+    </div>
+  </div>
+{:else}
 <div class="space-y-5 animate-in fade-in duration-200">
   <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
     <div>
@@ -105,3 +144,4 @@
     </div>
   </div>
 </div>
+{/if}

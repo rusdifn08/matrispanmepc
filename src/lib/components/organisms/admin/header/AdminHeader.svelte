@@ -13,14 +13,28 @@
     testChime: void;
     backToHome: void;
     logout: void;
+    toggleSidebar: void;
   }>();
 </script>
 
-<header class="bg-[#0B2D24] text-white border-b border-[#C88A2E]/30 sticky top-0 z-40 shadow-lg">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col md:flex-row md:items-center justify-between gap-3">
-    <!-- Left: Logo & Portal Title -->
+<header class="bg-[#0B2D24] text-white border-b border-[#C88A2E]/30 sticky top-0 z-30 shadow-lg">
+  <div class="w-full px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col md:flex-row md:items-center justify-between gap-3">
+    <!-- Left: Logo & Portal Title with Mobile Sidebar Toggle -->
     <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-xl bg-white/10 border border-[#C88A2E]/50 flex items-center justify-center p-1.5 shadow-inner">
+      <!-- Mobile Sidebar Hamburger Toggle -->
+      <button
+        type="button"
+        on:click={() => dispatch('toggleSidebar')}
+        class="lg:hidden p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 mr-1 flex items-center justify-center"
+        aria-label="Buka menu navigasi admin"
+        title="Buka Menu Navigasi"
+      >
+        <svg class="w-5 h-5 text-amber-300" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+        </svg>
+      </button>
+
+      <div class="w-10 h-10 rounded-xl bg-white/10 border border-[#C88A2E]/50 flex items-center justify-center p-1.5 shadow-inner flex-shrink-0">
         <img src="/logo.webp" alt="PT. MEPC Logo" class="w-full h-full object-contain" />
       </div>
       <div>
