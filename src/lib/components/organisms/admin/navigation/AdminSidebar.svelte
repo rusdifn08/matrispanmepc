@@ -21,6 +21,11 @@
   $: isOwner = currentUser?.role === 'SUPER_ADMIN';
   $: canAccessFinance = isOwner || currentUser?.role === 'FINANCE_OFFICER';
 
+  $: adminDisplayName = (currentUser?.name && !currentUser.name.includes('H. Rusdi'))
+    ? currentUser.name
+    : 'Rusdi Fadli Nuryuda';
+  $: avatarInitial = adminDisplayName.charAt(0) || 'R';
+
   function getRoleLabel(role?: string): string {
     switch (role) {
       case 'SUPER_ADMIN':
@@ -90,32 +95,24 @@
       </button>
     </div>
 
-    <!-- User Profile & Jabatan Card -->
+    <!-- User Profile Card -->
     <div class="p-3 rounded-2xl bg-white/5 border border-white/10 shadow-sm">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#C88A2E] to-amber-400 text-white font-extrabold flex items-center justify-center text-sm shadow-md flex-shrink-0">
-          {currentUser?.name ? currentUser.name.charAt(0) : 'A'}
+          {avatarInitial}
         </div>
         <div class="min-w-0 flex-1">
           <div class="flex items-center gap-1.5">
-            <h3 class="text-xs font-bold text-white truncate" title={currentUser?.name}>
-              {currentUser?.name || 'Administrator'}
+            <h3 class="text-xs font-bold text-white truncate" title={adminDisplayName}>
+              {adminDisplayName}
             </h3>
-            {#if isOwner}
-              <span class="px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 text-[9px] font-black font-mono border border-amber-400/30">
-                OWNER
-              </span>
-            {/if}
-          </div>
-          <p class="text-[11px] font-semibold text-[#D4AF37] truncate mt-0.5" title={getRoleLabel(currentUser?.role)}>
-            {getRoleLabel(currentUser?.role)}
-          </p>
-          <div class="flex items-center gap-2 mt-1 text-[10px] text-gray-400">
-            <span class="font-mono bg-black/40 px-1.5 py-0.2 rounded text-emerald-400">
-              {currentUser?.nik || 'MEPC-STAFF'}
+            <span class="px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 text-[9px] font-black font-mono border border-amber-400/30">
+              OWNER
             </span>
-            <span class="truncate">{currentUser?.department?.split('&')[0] || 'Eksekutif'}</span>
           </div>
+          <p class="text-[11px] font-semibold text-[#D4AF37] truncate mt-0.5">
+            PT. MATRISPAN EXIM PHOENIX CORP
+          </p>
         </div>
       </div>
     </div>

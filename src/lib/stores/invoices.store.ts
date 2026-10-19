@@ -63,7 +63,7 @@ export const initialInvoices: Invoice[] = [
         branch: 'KCP BINJAI JUANDA - SUMATERA UTARA, INDONESIA',
       },
       qr_verification_code: 'https://matrispanmepc.com/verify-invoice?code=INV/MEPC/2026/0089',
-      authorized_signatory: 'Direktur Operasional & Ekspor / M. Rusdi',
+      authorized_signatory: 'Direksi & Manajemen Operasional Ekspor / Rusdi Fadli Nuryuda',
     },
   },
 ];

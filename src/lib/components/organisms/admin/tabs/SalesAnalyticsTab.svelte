@@ -67,7 +67,7 @@
     <p class="text-sm text-gray-600 max-w-xl mx-auto mt-2 leading-relaxed">
       Halaman <strong>Dashboard Penjualan & Margin Keuntungan Ekspor</strong> berstatus 
       <span class="text-rose-600 font-bold">Confidential</span> dan hanya dapat diakses oleh akun dengan tingkat 
-      <strong>Owner / Direktur Utama</strong> (H. Rusdi Matrispan).
+      <strong>Owner / Direktur Utama</strong> (Rusdi Fadli Nuryuda).
     </p>
 
     <!-- Staff Identity Context -->
