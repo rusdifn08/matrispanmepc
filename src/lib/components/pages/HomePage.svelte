@@ -3,18 +3,11 @@
   import CommodityShowcase from '../organisms/catalog/CommodityShowcase.svelte';
   import USPSection from '../organisms/hero/USPSection.svelte';
   import LiveStatusWidget from '../organisms/live-status/LiveStatusWidget.svelte';
-
-  function scrollToCatalog() {
-    const el = document.getElementById('commodities');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
 </script>
 
 <div>
   <!-- Hero Section with Container Ship Banner & Verified Stats -->
-  <HeroSection onExploreCatalog={scrollToCatalog} />
+  <HeroSection />
 
   <!-- 4 Core Export Sectors Showcase with Live Search & Filter -->
   <CommodityShowcase />

@@ -1,12 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import ForsaIknBadge from '../../atoms/icons/ForsaIknBadge.svelte';
-  import GoldButton from '../../atoms/buttons/GoldButton.svelte';
-  import WhatsAppButton from '../../atoms/buttons/WhatsAppButton.svelte';
   import StatCard from '../../molecules/cards/StatCard.svelte';
-  import { activeModal } from '../../../stores';
-
-  export let onExploreCatalog: () => void = () => {};
 
   // Parallax states (mouse tracking + scroll tracking)
   let mouseX = 0;
@@ -21,10 +16,6 @@
 
   function handleScroll() {
     scrollY = window.scrollY;
-  }
-
-  function openSupplier() {
-    activeModal.set('supplier');
   }
 
   onMount(() => {
@@ -104,48 +95,9 @@
       Bringing Indonesia's <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#FFE099] via-[#C88A2E] to-[#E5A84B] underline decoration-[#C88A2E]/40 decoration-wavy decoration-1">Finest Commodities</span> to the World
     </h1>
 
-    <p class="text-sm sm:text-base md:text-lg text-gray-200/90 max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+    <p class="text-sm sm:text-base md:text-lg text-gray-200/90 max-w-2xl mx-auto mb-14 leading-relaxed font-normal">
       Portal perdagangan ekspor B2B resmi <strong class="text-white font-semibold">PT. Matrispan Exim Phoenix Corp</strong>. Menghubungkan rempah nusantara, produk turunan kelapa, hasil laut beku berstandar rantai dingin, dan wastra tenun Sumatera dari Binjai langsung ke pembeli global via Pelabuhan Internasional Belawan.
     </p>
-
-    <!-- Dual Action CTAs (Buyer & Supplier) + Direct Consultation Button -->
-    <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto mb-16">
-      
-      <!-- Golden Buyer Catalog Button with Interactive Shimmer & Mobile Responsive Label -->
-      <button
-        type="button"
-        on:click={onExploreCatalog}
-        class="group relative w-full sm:w-auto inline-flex items-center justify-center font-extrabold px-8 py-4 rounded-xl bg-gradient-to-r from-[#C88A2E] to-[#B07521] text-white hover:from-[#d89b3f] hover:to-[#be8028] shadow-lg shadow-[#C88A2E]/30 active:scale-95 transition-all text-base min-h-[52px] overflow-hidden"
-      >
-        <span class="absolute inset-0 w-1/2 h-full bg-white/20 skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000 ease-out"></span>
-        <svg class="w-5 h-5 mr-2 text-white flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/>
-        </svg>
-        <span class="relative">
-          Jelajahi Katalog Ekspor <span class="hidden sm:inline">(Buyer)</span>
-        </span>
-      </button>
-
-      <!-- Portal Suplai Petani Button -->
-      <button
-        type="button"
-        on:click={openSupplier}
-        class="w-full sm:w-auto inline-flex items-center justify-center font-bold px-7 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/25 backdrop-blur-md transition-all active:scale-95 text-base min-h-[52px] hover:border-[#C88A2E]"
-      >
-        <svg class="w-5 h-5 mr-2 text-[#C88A2E]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-        </svg>
-        Portal Suplai Petani
-      </button>
-
-      <!-- Konsultasi Ekspor Button (Direct, no WhatsApp word) -->
-      <WhatsAppButton
-        size="lg"
-        label="Konsultasi Ekspor"
-        message="Halo Tim PT. MEPC (matrispanmepc.com), saya ingin berkonsultasi mengenai spesifikasi komoditas ekspor Indonesia."
-        className="w-full sm:w-auto min-h-[52px]"
-      />
-    </div>
 
     <!-- Verified Statistics Grid with Interactive Hover & Scroll Elevation -->
     <div

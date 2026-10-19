@@ -1,6 +1,11 @@
 <script lang="ts">
   import type { Product } from '../../../types';
-  import { cartActions, currentCurrency, usdExchangeRate } from '../../../stores';
+  import {
+    currentCurrency,
+    usdExchangeRate,
+    activeModal,
+    selectedModalProduct,
+  } from '../../../stores';
   import { formatCurrency } from '../../../utils';
   import GoldButton from '../../atoms/buttons/GoldButton.svelte';
   import ExportBadge from '../../atoms/badges/ExportBadge.svelte';
@@ -13,12 +18,38 @@
 
   let orderQuantity: number = product.min_order_qty;
 
-  function handleAddToCart() {
-    cartActions.addItem(product, orderQuantity);
+  function decrement(e: MouseEvent) {
+    e.stopPropagation();
+    if (orderQuantity > product.min_order_qty) {
+      orderQuantity -= 1;
+    }
+  }
+
+  function increment(e: MouseEvent) {
+    e.stopPropagation();
+    orderQuantity += 1;
+  }
+
+  function handleCardClick() {
+    selectedModalProduct.set({ product, quantity: orderQuantity });
+    activeModal.set('product_detail');
+  }
+
+  function handleOrderClick(e: MouseEvent) {
+    e.stopPropagation();
+    selectedModalProduct.set({ product, quantity: orderQuantity });
+    activeModal.set('order_choice');
   }
 </script>
 
-<div class="group relative flex flex-col bg-white rounded-xl sm:rounded-2xl overflow-hidden border border-gray-200/80 hover:border-[#C88A2E]/50 shadow-sm hover:shadow-xl transition-all duration-300">
+<div
+  on:click={handleCardClick}
+  class="group relative flex flex-col bg-white rounded-xl sm:rounded-2xl overflow-hidden border border-gray-200/80 hover:border-[#C88A2E]/60 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer select-none"
+  role="button"
+  tabindex="0"
+  on:keydown={(e) => { if (e.key === 'Enter') handleCardClick(); }}
+  aria-label="Lihat detail {product.name}"
+>
   <!-- Product Image Container with Category Badge & Hover Overlay -->
   <div class="relative h-32 sm:h-56 w-full overflow-hidden bg-gray-100">
     <img
@@ -27,11 +58,11 @@
       loading="lazy"
       class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
     />
-    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-85 group-hover:opacity-70 transition-opacity"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent opacity-85 group-hover:opacity-75 transition-opacity"></div>
     
     <!-- Category & HS Code Pills -->
     <div class="absolute top-2 sm:top-3 left-2 sm:left-3 flex items-center gap-1 sm:gap-1.5 flex-wrap">
-      <span class="inline-flex items-center gap-1 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded sm:rounded-md text-[9px] sm:text-[11px] font-bold bg-[#0B2D24]/90 text-white backdrop-blur-md border border-white/20">
+      <span class="inline-flex items-center gap-1 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded sm:rounded-md text-[9px] sm:text-[11px] font-bold bg-[#0B2D24]/90 text-white backdrop-blur-md border border-white/20 shadow-sm">
         {#if product.category === 'Spices'}
           <SpicesIcon className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5" />
         {:else if product.category === 'Coconut'}
@@ -124,21 +155,31 @@
         </div>
       </div>
 
-      <!-- Quantity input + Add to Cart Button -->
-      <div class="flex items-center gap-1.5 sm:gap-2">
-        <div class="w-14 sm:w-24 flex items-center border border-gray-300 rounded-lg sm:rounded-xl overflow-hidden bg-white">
-          <input
-            type="number"
-            min={product.min_order_qty}
-            step="1"
-            bind:value={orderQuantity}
-            class="w-full text-center py-1 sm:py-2 text-[10px] sm:text-xs font-semibold focus:outline-none"
-            aria-label="Order Quantity"
-          />
-          <span class="pr-1 sm:pr-2 text-[8px] sm:text-[10px] text-gray-400 font-medium hidden sm:inline">{product.unit}</span>
+      <!-- Quantity Stepper with Professional - and + Buttons (no native spin arrows) -->
+      <div class="flex items-center gap-1.5 sm:gap-2" role="presentation" on:click|stopPropagation on:keydown|stopPropagation>
+        <div class="inline-flex items-center bg-gray-100 rounded-lg sm:rounded-xl p-0.5 border border-gray-300 shadow-inner flex-shrink-0">
+          <button
+            type="button"
+            on:click={decrement}
+            class="w-6 h-6 sm:w-7 sm:h-7 rounded-md bg-white hover:bg-gray-200 text-gray-700 flex items-center justify-center font-bold text-xs transition-all active:scale-90 shadow-sm"
+            aria-label="Kurangi kuantiti"
+          >
+            -
+          </button>
+          <span class="w-7 sm:w-10 text-center text-[10px] sm:text-xs font-black font-mono text-[#0B2D24] select-none">
+            {orderQuantity}
+          </span>
+          <button
+            type="button"
+            on:click={increment}
+            class="w-6 h-6 sm:w-7 sm:h-7 rounded-md bg-white hover:bg-gray-200 text-gray-700 flex items-center justify-center font-bold text-xs transition-all active:scale-90 shadow-sm"
+            aria-label="Tambah kuantiti"
+          >
+            +
+          </button>
         </div>
 
-        <GoldButton size="sm" className="flex-1 py-1.5 sm:py-2 px-2 text-xs" on:click={handleAddToCart}>
+        <GoldButton size="sm" className="flex-1 py-1.5 sm:py-2 px-2 text-xs" on:click={handleOrderClick}>
           <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-0.5 sm:mr-1.5" viewBox="0 0 20 20" fill="currentColor">
             <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
           </svg>

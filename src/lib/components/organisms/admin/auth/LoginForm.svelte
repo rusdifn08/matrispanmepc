@@ -6,25 +6,13 @@
   const dispatch = createEventDispatcher<{
     success: void;
     error: string;
+    switchToRegister: void;
   }>();
 
-  let loginIdentifier = 'admin';
-  let loginPassword = 'admin';
+  let loginIdentifier = '';
+  let loginPassword = '';
   let showLoginPassword = false;
   let isSubmitting = false;
-
-  export function autofillDemo(type: 'admin' | 'manager' | 'logistics') {
-    if (type === 'admin') {
-      loginIdentifier = 'admin';
-      loginPassword = 'admin';
-    } else if (type === 'manager') {
-      loginIdentifier = 'MEPC-EXP-002';
-      loginPassword = 'admin';
-    } else if (type === 'logistics') {
-      loginIdentifier = 'MEPC-LOG-003';
-      loginPassword = 'admin';
-    }
-  }
 
   async function handleLogin() {
     if (!loginIdentifier.trim() || !loginPassword.trim()) {
@@ -56,7 +44,7 @@
         id="login-id"
         type="text"
         bind:value={loginIdentifier}
-        placeholder="Contoh: MEPC-DIR-001 atau admin@matrispanmepc.com"
+        placeholder="Contoh: MEPC-DIR-001 atau admin"
         class="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#C88A2E]/50 focus:border-[#C88A2E]"
         required
       />
@@ -65,13 +53,13 @@
       </svg>
     </div>
     <span class="text-[10px] text-gray-400 block mt-1">
-      Bisa menggunakan NIK (MEPC-XXX-XXX), email terdaftar, atau "admin".
+      Bisa menggunakan NIK (MEPC-XXX-XXX), email terdaftar, atau username.
     </span>
   </div>
 
   <div>
     <label for="login-pass" class="text-xs font-semibold text-gray-700 block mb-1">
-      Password Terenkripsi
+      Password
     </label>
     <div class="relative">
       <input
@@ -107,36 +95,6 @@
     </div>
   </div>
 
-  <!-- Quick Demo Credentials Fill -->
-  <div class="p-3 rounded-2xl bg-amber-50/70 border border-amber-200/80 space-y-1.5">
-    <span class="text-[10px] uppercase font-bold text-amber-900 block">
-      ⚡ Akses Uji Cepat (Demo Presets):
-    </span>
-    <div class="flex flex-wrap gap-1.5 text-[11px]">
-      <button
-        type="button"
-        on:click={() => autofillDemo('admin')}
-        class="px-2.5 py-1 rounded-lg bg-white border border-amber-300 text-amber-950 font-bold hover:bg-amber-100 transition-colors"
-      >
-        Super Admin (admin / admin)
-      </button>
-      <button
-        type="button"
-        on:click={() => autofillDemo('manager')}
-        class="px-2.5 py-1 rounded-lg bg-white border border-amber-300 text-amber-950 font-bold hover:bg-amber-100 transition-colors"
-      >
-        Manajer Ekspor (MEPC-EXP-002)
-      </button>
-      <button
-        type="button"
-        on:click={() => autofillDemo('logistics')}
-        class="px-2.5 py-1 rounded-lg bg-white border border-amber-300 text-amber-950 font-bold hover:bg-amber-100 transition-colors"
-      >
-        Logistik Belawan (MEPC-LOG-003)
-      </button>
-    </div>
-  </div>
-
   <div class="pt-2">
     <GoldButton
       type="submit"
@@ -150,11 +108,23 @@
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
           </svg>
-          Memvalidasi Token NeonDB...
+          Memvalidasi Akun...
         </span>
       {:else}
-        Masuk ke Admin Dashboard
+        Sign In
       {/if}
     </GoldButton>
+  </div>
+
+  <!-- Direct Register Link under Sign In button (no card wrapper) -->
+  <div class="text-center pt-2 text-xs text-gray-600">
+    Belum ada akun,
+    <button
+      type="button"
+      on:click={() => dispatch('switchToRegister')}
+      class="text-blue-600 hover:text-blue-700 font-semibold hover:underline ml-1"
+    >
+      Daftar Disini
+    </button>
   </div>
 </form>

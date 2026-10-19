@@ -168,15 +168,21 @@
 
       <!-- Unified Header Right Actions (Clean, Non-Duplicating at any Zoom level) -->
       <div class="flex items-center gap-2.5 sm:gap-3 flex-shrink-0">
-        <!-- Currency Toggle Pill ($currentCurrency: USD / IDR) -->
+        <!-- Compact Currency Switcher ($ vs Rp only) -->
         <button
           type="button"
           on:click={toggleCurrency}
-          class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/20 backdrop-blur-md transition-all active:scale-95 shadow-sm min-h-[42px]"
-          title="Ganti mata uang (USD / IDR)"
+          class="inline-flex items-center gap-1 px-2 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-mono text-xs border border-white/20 backdrop-blur-md transition-all active:scale-95 shadow-sm min-h-[40px]"
+          title="Ganti mata uang ($ Dollar / Rp Rupiah)"
+          aria-label="Toggle Mata Uang"
         >
-          <span class="text-amber-300">{$currentCurrency === 'USD' ? '🇺🇸' : '🇮🇩'}</span>
-          <span class="font-mono tracking-wider font-extrabold text-xs">{$currentCurrency}</span>
+          <span class="w-6 h-6 rounded-lg flex items-center justify-center font-black text-xs transition-all {$currentCurrency === 'USD' ? 'bg-[#C88A2E] text-white shadow-sm' : 'text-gray-400'}">
+            $
+          </span>
+          <span class="text-gray-500 text-[10px] font-sans font-light select-none">|</span>
+          <span class="px-1.5 h-6 rounded-lg flex items-center justify-center font-bold text-[11px] transition-all {$currentCurrency === 'IDR' ? 'bg-[#C88A2E] text-white shadow-sm' : 'text-gray-400'}">
+            Rp
+          </span>
         </button>
 
         <!-- Cart Icon Button with Badge Counter -->

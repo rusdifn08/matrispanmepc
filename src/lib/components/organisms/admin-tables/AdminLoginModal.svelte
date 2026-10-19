@@ -12,6 +12,7 @@
 
   function closeModal() {
     isAdminLoginModalOpen.set(false);
+    activeTab = 'login';
     errorMessage = '';
     successMessage = '';
   }
@@ -32,7 +33,7 @@
   <div class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
     <div class="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden animate-in zoom-in-95 duration-200 max-h-[92vh] flex flex-col">
       
-      <!-- Top Header -->
+      <!-- Top Header (No extra database status badges) -->
       <div class="bg-[#0B2D24] text-white p-5 sm:p-6 text-center border-b border-[#C88A2E]/40 relative flex-shrink-0">
         <button
           type="button"
@@ -49,42 +50,11 @@
           <PhoenixLogo size="md" variant="light" />
         </div>
         <h3 class="text-base sm:text-lg font-bold font-heading text-white">
-          Sistem Portal Internal PT. MEPC
+          {activeTab === 'login' ? 'Sistem Portal Internal PT. MEPC' : 'Registrasi Karyawan PT. MEPC'}
         </h3>
-        <div class="flex items-center justify-center gap-2 mt-1">
-          <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-950 border border-emerald-500/50 text-emerald-300">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            NeonDB PostgreSQL Cloud Online
-          </span>
-          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#C88A2E]/20 text-amber-200">
-            RBAC & Bcrypt Active
-          </span>
-        </div>
-      </div>
-
-      <!-- Navigation Tabs (Login vs Sign Up) -->
-      <div class="flex border-b border-gray-200 bg-gray-50 flex-shrink-0 text-xs font-bold">
-        <button
-          type="button"
-          on:click={() => { activeTab = 'login'; errorMessage = ''; }}
-          class="flex-1 py-3 px-4 text-center transition-all flex items-center justify-center gap-2 {activeTab === 'login' ? 'bg-white text-[#0B2D24] border-b-2 border-[#C88A2E] shadow-sm' : 'text-gray-500 hover:text-gray-900'}"
-        >
-          <svg class="w-4 h-4 text-[#C88A2E]" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd"/>
-          </svg>
-          <span>Masuk Sistem (Login)</span>
-        </button>
-
-        <button
-          type="button"
-          on:click={() => { activeTab = 'signup'; errorMessage = ''; }}
-          class="flex-1 py-3 px-4 text-center transition-all flex items-center justify-center gap-2 {activeTab === 'signup' ? 'bg-white text-[#0B2D24] border-b-2 border-[#C88A2E] shadow-sm' : 'text-gray-500 hover:text-gray-900'}"
-        >
-          <svg class="w-4 h-4 text-emerald-600" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"/>
-          </svg>
-          <span>Registrasi Karyawan (Sign Up)</span>
-        </button>
+        <p class="text-xs text-amber-200/80 mt-0.5">
+          {activeTab === 'login' ? 'Silakan masukkan NIK / Akun resmi Anda untuk masuk' : 'Lengkapi data kepegawaian resmi untuk mendaftar akun'}
+        </p>
       </div>
 
       <!-- Scrollable Form Body -->
@@ -111,11 +81,13 @@
           <LoginForm
             on:success={handleLoginSuccess}
             on:error={(e) => (errorMessage = e.detail)}
+            on:switchToRegister={() => { activeTab = 'signup'; errorMessage = ''; }}
           />
         {:else}
           <RegisterStaffForm
             on:success={handleRegisterSuccess}
             on:error={(e) => (errorMessage = e.detail)}
+            on:switchToLogin={() => { activeTab = 'login'; errorMessage = ''; }}
           />
         {/if}
       </div>
@@ -123,7 +95,7 @@
       <!-- Footer Info -->
       <div class="p-3 bg-gray-50 border-t border-gray-100 text-center flex-shrink-0">
         <span class="text-[11px] text-gray-500">
-          PT. Matrispan Exim Phoenix Corp • Seluruh aktivitas dicatat dalam <strong>Security Audit Log</strong>.
+          PT. Matrispan Exim Phoenix Corp • Portal Resmi Kepegawaian & Operasional B2B.
         </span>
       </div>
 

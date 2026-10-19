@@ -7,6 +7,7 @@
   const dispatch = createEventDispatcher<{
     success: { name: string; nik: string };
     error: string;
+    switchToLogin: void;
   }>();
 
   let regNik = 'MEPC-EXP-';
@@ -241,5 +242,17 @@
         Daftarkan Akun Karyawan & Dapatkan Akses
       {/if}
     </GoldButton>
+  </div>
+
+  <!-- Direct Login Link under Register button (no card wrapper) -->
+  <div class="text-center pt-2 text-xs text-gray-600">
+    Sudah punya akun?
+    <button
+      type="button"
+      on:click={() => dispatch('switchToLogin')}
+      class="text-blue-600 hover:text-blue-700 font-semibold hover:underline ml-1"
+    >
+      Masuk Disini
+    </button>
   </div>
 </form>

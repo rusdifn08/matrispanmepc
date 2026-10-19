@@ -7,6 +7,9 @@
   import SupplierFormModal from '../../organisms/supplier-request/SupplierFormModal.svelte';
   import InvoiceModal from '../../organisms/invoice-generator/InvoiceModal.svelte';
   import AdminLoginModal from '../../organisms/admin-tables/AdminLoginModal.svelte';
+  import FloatingWhatsApp from '../../molecules/buttons/FloatingWhatsApp.svelte';
+  import ProductDetailModal from '../../organisms/catalog/ProductDetailModal.svelte';
+  import OrderChoiceModal from '../../organisms/catalog/OrderChoiceModal.svelte';
 
   export let currentView: 'home' | 'admin' = 'home';
   export let onViewChange: (view: 'home' | 'admin') => void = () => {};
@@ -33,5 +36,10 @@
   <BuyerOrderModal />
   <SupplierFormModal />
   <InvoiceModal />
+  <ProductDetailModal />
+  <OrderChoiceModal />
   <AdminLoginModal onSuccess={() => onViewChange('admin')} />
+
+  <!-- Professional Floating WhatsApp Hotline Button -->
+  <FloatingWhatsApp />
 </div>
