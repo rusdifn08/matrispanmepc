@@ -17,19 +17,26 @@
 </script>
 
 <div class="min-h-screen flex flex-col bg-[#F8F6F0] text-gray-900 selection:bg-[#C88A2E] selection:text-white w-full max-w-full overflow-x-hidden relative">
-  <!-- Sticky Glassmorphism Header -->
-  <Navbar {currentView} {onViewChange} {onNavigate} />
+  {#if currentView !== 'admin'}
+    <!-- Sticky Glassmorphism Header -->
+    <Navbar {currentView} {onViewChange} {onNavigate} />
+  {/if}
 
   <!-- Main Dynamic Page Body -->
   <main class="flex-1 w-full max-w-full overflow-x-hidden">
     <slot />
   </main>
 
-  <!-- Corporate Footer with Discreet Admin Access -->
-  <Footer onOpenAdmin={() => onViewChange('admin')} />
+  {#if currentView !== 'admin'}
+    <!-- Corporate Footer with Discreet Admin Access -->
+    <Footer onOpenAdmin={() => onViewChange('admin')} />
 
-  <!-- Mobile Bottom Sticky Action Bar (< 768px) -->
-  <BottomActionBar {onNavigate} />
+    <!-- Mobile Bottom Sticky Action Bar (< 768px) -->
+    <BottomActionBar {onNavigate} />
+
+    <!-- Professional Floating WhatsApp Hotline Button -->
+    <FloatingWhatsApp />
+  {/if}
 
   <!-- Global Modals & Notifications -->
   <NotificationToast />
@@ -39,7 +46,4 @@
   <ProductDetailModal />
   <OrderChoiceModal />
   <AdminLoginModal onSuccess={() => onViewChange('admin')} />
-
-  <!-- Professional Floating WhatsApp Hotline Button -->
-  <FloatingWhatsApp />
 </div>

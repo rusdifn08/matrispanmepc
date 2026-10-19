@@ -157,8 +157,8 @@
   }
 </script>
 
-<div class="min-h-screen bg-[#F4F6F8] flex flex-col lg:flex-row">
-  <!-- Professional Enterprise Left Sidebar -->
+<div class="min-h-screen bg-[#F4F6F8] flex">
+  <!-- Professional Enterprise Left Sidebar (Fixed) -->
   <AdminSidebar
     {currentMenu}
     pendingOrdersCount={$pendingOrdersCount}
@@ -177,17 +177,15 @@
     }}
   />
 
-  <!-- Main Right Content Column -->
-  <div class="flex-1 flex flex-col min-w-0 min-h-screen pb-16">
+  <!-- Main Right Content Column with Left Offset for Fixed Sidebar -->
+  <div class="flex-1 flex flex-col min-w-0 min-h-screen pb-16 lg:pl-72">
     <!-- Top Executive Header Bar -->
     <AdminHeader
-      {backendTelemetry}
       {isSyncing}
       currentUser={$currentUser}
       on:toggleSidebar={() => (isSidebarOpenMobile = !isSidebarOpenMobile)}
       on:sync={() => triggerSync(true)}
       on:openReport={() => openReportModal('orders')}
-      on:testChime={testChime}
       on:backToHome={onBackToHome}
       on:logout={() => {
         authActions.logout();

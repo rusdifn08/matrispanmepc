@@ -54,9 +54,9 @@
   ></button>
 {/if}
 
-<!-- Enterprise Admin Sidebar -->
+<!-- Enterprise Admin Sidebar (Fixed Position) -->
 <aside
-  class="fixed lg:sticky top-0 left-0 bottom-0 z-50 lg:z-30 w-72 h-screen bg-[#071F19] text-gray-200 border-r border-[#C88A2E]/25 flex flex-col justify-between shadow-2xl transition-transform duration-300 ease-in-out {isOpenMobile ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}"
+  class="fixed top-0 left-0 bottom-0 z-40 w-72 h-screen bg-[#071F19] text-gray-200 border-r border-[#C88A2E]/25 flex flex-col justify-between shadow-2xl transition-transform duration-300 ease-in-out {isOpenMobile ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}"
   aria-label="Sidebar Navigasi Admin PT. MEPC"
 >
   <!-- Top Section: Brand & User Identity -->
