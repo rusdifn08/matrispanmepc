@@ -50,7 +50,10 @@ export const apiClient = {
       body: JSON.stringify({
         identifier: payload.identifier,
         username: payload.identifier,
+        user: payload.identifier,
+        email: payload.identifier,
         password: payload.password,
+        pass: payload.password,
       }),
     });
 
