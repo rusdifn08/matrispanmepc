@@ -16,8 +16,8 @@
   }
 </script>
 
-<footer class="bg-[#071f19] text-white pt-16 pb-28 md:pb-16 border-t border-[#C88A2E]/30">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<footer class="bg-[#071f19] text-white pt-16 pb-28 md:pb-16 border-t border-[#C88A2E]/30 w-full overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/10">
       
       <!-- Column 1: Brand & Strategic Profile -->

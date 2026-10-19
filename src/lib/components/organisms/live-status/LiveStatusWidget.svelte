@@ -56,8 +56,8 @@
   });
 </script>
 
-<div id="belawan" class="bg-[#0B2D24] text-white py-12 border-t border-[#C88A2E]/30">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div id="belawan" class="bg-[#0B2D24] text-white py-12 border-t border-[#C88A2E]/30 w-full overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
     <div class="flex flex-col lg:flex-row items-center justify-between gap-8 bg-white/5 p-6 rounded-3xl border border-white/10 backdrop-blur-md">
       
       <!-- Headquarter & Belawan Proximity Info -->

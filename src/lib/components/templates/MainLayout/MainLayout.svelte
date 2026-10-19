@@ -16,12 +16,12 @@
   export let onNavigate: (sectionId: string) => void = () => {};
 </script>
 
-<div class="min-h-screen flex flex-col bg-[#F8F6F0] text-gray-900 selection:bg-[#C88A2E] selection:text-white">
+<div class="min-h-screen flex flex-col bg-[#F8F6F0] text-gray-900 selection:bg-[#C88A2E] selection:text-white w-full max-w-full overflow-x-hidden relative">
   <!-- Sticky Glassmorphism Header -->
   <Navbar {currentView} {onViewChange} {onNavigate} />
 
   <!-- Main Dynamic Page Body -->
-  <main class="flex-1">
+  <main class="flex-1 w-full max-w-full overflow-x-hidden">
     <slot />
   </main>
 

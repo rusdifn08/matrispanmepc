@@ -89,9 +89,9 @@
   });
 </script>
 
-<header class="sticky top-0 z-40 w-full glassmorphism transition-all duration-300 border-b border-[#C88A2E]/25 shadow-lg shadow-black/10">
-  <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
-    <div class="flex items-center justify-between h-20 gap-4">
+<header class="sticky top-0 z-40 w-full max-w-full glassmorphism transition-all duration-300 border-b border-[#C88A2E]/25 shadow-lg shadow-black/10">
+  <div class="max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-10">
+    <div class="flex items-center justify-between h-14 sm:h-16 gap-2 sm:gap-4">
       
       <!-- Brand Logo with public/logo.webp -->
       <a
@@ -166,22 +166,22 @@
         </button>
       </nav>
 
-      <!-- Unified Header Right Actions (Clean, Non-Duplicating at any Zoom level) -->
-      <div class="flex items-center gap-2.5 sm:gap-3 flex-shrink-0">
+      <!-- Unified Header Right Actions (Clean, Perfectly Fitting at Any Width) -->
+      <div class="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0">
         <!-- Single Currency Icon Button Toggle ($ <-> Rp) -->
         <button
           type="button"
           on:click={toggleCurrency}
-          class="w-10 h-10 sm:w-10 sm:h-10 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md transition-all active:scale-90 shadow-sm flex items-center justify-center group flex-shrink-0"
+          class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md transition-all active:scale-90 shadow-sm flex items-center justify-center group flex-shrink-0"
           title="Mata uang saat ini: {$currentCurrency}. Klik untuk beralih ke {$currentCurrency === 'USD' ? 'Rupiah (Rp)' : 'Dollar ($)'}"
           aria-label="Ganti Mata Uang"
         >
           {#if $currentCurrency === 'USD'}
-            <span class="w-7 h-7 rounded-lg bg-gradient-to-tr from-[#C88A2E] to-amber-400 text-white font-black font-mono text-sm flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+            <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-md sm:rounded-lg bg-gradient-to-tr from-[#C88A2E] to-amber-400 text-white font-black font-mono text-xs sm:text-sm flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
               $
             </span>
           {:else}
-            <span class="w-7 h-7 rounded-lg bg-gradient-to-tr from-emerald-600 to-teal-500 text-white font-black font-mono text-xs flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+            <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-md sm:rounded-lg bg-gradient-to-tr from-emerald-600 to-teal-500 text-white font-black font-mono text-[10px] sm:text-xs flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
               Rp
             </span>
           {/if}
@@ -191,15 +191,15 @@
         <button
           type="button"
           on:click={openCart}
-          class="relative p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md transition-all active:scale-95 shadow-sm min-h-[42px] flex items-center justify-center"
+          class="relative w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md transition-all active:scale-95 shadow-sm flex items-center justify-center flex-shrink-0"
           aria-label="Keranjang Order"
           title="Buka Keranjang Order"
         >
-          <svg class="w-5 h-5 text-[#C88A2E]" viewBox="0 0 20 20" fill="currentColor">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#C88A2E]" viewBox="0 0 20 20" fill="currentColor">
             <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
           </svg>
           {#if $cartCount > 0}
-            <span class="absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1 rounded-full bg-[#C88A2E] text-white text-[10px] font-black flex items-center justify-center shadow-md animate-pulse">
+            <span class="absolute -top-1 -right-1 min-w-[16px] h-4 sm:min-w-[18px] sm:h-4.5 px-0.5 rounded-full bg-[#C88A2E] text-white text-[8px] sm:text-[9px] font-black flex items-center justify-center shadow-md animate-pulse">
               {$cartCount}
             </span>
           {/if}
@@ -209,10 +209,10 @@
         <button
           type="button"
           on:click={() => (mobileMenuOpen = !mobileMenuOpen)}
-          class="xl:hidden p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 focus:outline-none transition-colors min-h-[42px] flex items-center justify-center"
+          class="xl:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 focus:outline-none transition-colors flex items-center justify-center flex-shrink-0"
           aria-label="Menu Navigasi"
         >
-          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             {#if mobileMenuOpen}
               <path d="M6 18L18 6M6 6l12 12" />
             {:else}

@@ -28,7 +28,7 @@
   });
 </script>
 
-<section id="hero" class="relative min-h-[94vh] flex items-center justify-center overflow-hidden bg-[#0B2D24] text-white">
+<section id="hero" class="relative min-h-[94vh] w-full max-w-full flex items-center justify-center overflow-hidden bg-[#0B2D24] text-white">
   
   <!-- Parallax High-Resolution Container Ship Hero Background with Faded Top Gradient -->
   <div
@@ -47,15 +47,17 @@
     <div class="absolute inset-0 bg-[radial-gradient(#C88A2E_1px,transparent_1px)] [background-size:28px_28px] opacity-15"></div>
   </div>
 
-  <!-- Parallax Floating Glowing Ambient Orbs -->
-  <div
-    class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#C88A2E]/20 blur-3xl pointer-events-none transition-transform duration-700 ease-out"
-    style="transform: translate({mouseX * 25}px, {mouseY * 20 + scrollY * -0.2}px);"
-  ></div>
-  <div
-    class="absolute bottom-10 -right-20 w-80 h-80 rounded-full bg-emerald-500/15 blur-3xl pointer-events-none transition-transform duration-700 ease-out"
-    style="transform: translate({mouseX * -30}px, {mouseY * -25 + scrollY * 0.15}px);"
-  ></div>
+  <!-- Parallax Floating Glowing Ambient Orbs (Strictly Contained within boundary) -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div
+      class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#C88A2E]/20 blur-3xl transition-transform duration-700 ease-out"
+      style="transform: translate({mouseX * 25}px, {mouseY * 20 + scrollY * -0.2}px);"
+    ></div>
+    <div
+      class="absolute bottom-10 -right-20 w-80 h-80 rounded-full bg-emerald-500/15 blur-3xl transition-transform duration-700 ease-out"
+      style="transform: translate({mouseX * -30}px, {mouseY * -25 + scrollY * 0.15}px);"
+    ></div>
+  </div>
 
   <!-- Floating Dynamic Live Status Badge with Scroll & Mouse Parallax -->
   <div

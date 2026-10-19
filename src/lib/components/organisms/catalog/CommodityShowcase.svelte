@@ -30,7 +30,7 @@
   });
 </script>
 
-<section id="commodities" class="py-16 sm:py-20 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+<section id="commodities" class="py-16 sm:py-20 w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 overflow-hidden">
   <div class="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-8 sm:mb-12">
     <div>
       <Heading level={2} subtitle="Portofolio Komoditas Ekspor">
