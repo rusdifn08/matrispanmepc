@@ -22,6 +22,7 @@
 
   import AdminHeader from '../admin/header/AdminHeader.svelte';
   import AdminSidebar from '../admin/navigation/AdminSidebar.svelte';
+  import AdminMobileNav from '../admin/navigation/AdminMobileNav.svelte';
   import OverviewTab from '../admin/tabs/OverviewTab.svelte';
   import SalesAnalyticsTab from '../admin/tabs/SalesAnalyticsTab.svelte';
   import OrdersTab from '../admin/tabs/OrdersTab.svelte';
@@ -193,8 +194,8 @@
       }}
     />
 
-    <!-- Main Content Container -->
-    <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 flex-1">
+    <!-- Main Content Container with Top and Bottom Padding to clear fixed header and fixed bottom nav -->
+    <main class="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-20 pb-24 lg:pt-20 lg:pb-12 flex-1">
       {#if currentMenu === 'overview'}
         <OverviewTab
           {backendTelemetry}
@@ -253,6 +254,16 @@
         />
       {/if}
     </main>
+
+    <!-- Mobile-Only Fixed Bottom Admin Navbar (Matches Sidebar) -->
+    <AdminMobileNav
+      {currentMenu}
+      pendingOrdersCount={$pendingOrdersCount}
+      unreadMessagesCount={$unreadMessagesCount}
+      pendingSuppliersCount={$pendingSuppliersCount}
+      on:changeMenu={(e) => setMenu(e.detail)}
+      on:toggleSidebar={() => (isSidebarOpenMobile = !isSidebarOpenMobile)}
+    />
   </div>
 </div>
 

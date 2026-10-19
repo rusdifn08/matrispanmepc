@@ -14,8 +14,7 @@
   }>();
 </script>
 
-<!-- Clean Single-Row Executive Admin Header -->
-<header class="bg-[#0B2D24] text-white border-b border-[#C88A2E]/30 sticky top-0 z-30 shadow-md">
+<header class="bg-[#0B2D24] text-white border-b border-[#C88A2E]/30 fixed top-0 left-0 right-0 lg:left-72 z-30 shadow-md h-16 no-print">
   <div class="w-full px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
     <!-- Left: Mobile Sidebar Toggle & Executive Title (Single Line) -->
     <div class="flex items-center gap-3 min-w-0">
