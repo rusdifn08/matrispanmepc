@@ -7,7 +7,6 @@
     exportElementToPdf,
     printElementIsolated,
   } from '../../../utils';
-  import PhoenixLogo from '../../atoms/icons/PhoenixLogo.svelte';
 
   let isGeneratingPdf = false;
 
@@ -29,7 +28,7 @@
       if (ok) {
         toastAction.show('File Proforma Invoice PDF berhasil diunduh!', 'success');
       } else {
-        toastAction.show('Membuka dialog cetak bersih...', 'warning');
+        toastAction.show('Membuka dialog cetak...', 'warning');
         handlePrint();
       }
     } catch (e) {
@@ -47,13 +46,26 @@
 </script>
 
 {#if $activeModal === 'invoice' && $activeInvoice}
-  <div id="invoice-modal-root" class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto print:static print:inset-auto print:p-0 print:m-0 print:bg-white print:overflow-visible print:block">
-    <div id="invoice-card-container" class="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden my-4 sm:my-8 animate-in fade-in zoom-in-95 duration-200 flex flex-col max-h-[92vh] print:static print:m-0 print:p-0 print:w-full print:max-w-none print:shadow-none print:border-none print:rounded-none print:overflow-visible print:max-h-none print:block">
+  <!-- Backdrop: Click outside to close, reduced opacity (bg-black/50) with blur -->
+  <div
+    id="invoice-modal-root"
+    on:click={(e) => { if (e.target === e.currentTarget) closeModal(); }}
+    on:keydown={(e) => { if (e.key === 'Escape') closeModal(); }}
+    class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/50 backdrop-blur-sm overflow-y-auto print:static print:inset-auto print:p-0 print:m-0 print:bg-white print:overflow-visible print:block"
+    role="dialog"
+    aria-modal="true"
+    tabindex="-1"
+  >
+    <!-- Modal Card Container -->
+    <div
+      id="invoice-card-container"
+      class="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden my-4 sm:my-8 animate-in fade-in zoom-in-95 duration-200 flex flex-col max-h-[92vh] print:static print:m-0 print:p-0 print:w-full print:max-w-none print:shadow-none print:border-none print:rounded-none print:overflow-visible print:max-h-none print:block"
+    >
       
       <!-- Top Action Bar (No-Print) -->
-      <div class="no-print bg-[#0B2D24] text-white px-6 py-4 flex items-center justify-between border-b border-[#C88A2E]/40 flex-shrink-0">
+      <div class="no-print bg-[#0B2D24] text-white px-5 sm:px-6 py-3.5 flex items-center justify-between border-b border-[#C88A2E]/40 flex-shrink-0">
         <div class="flex items-center gap-2">
-          <span class="px-2.5 py-1 rounded-md text-xs font-bold bg-[#C88A2E] text-white">
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#C88A2E] text-white uppercase tracking-wider">
             OFFICIAL DOCUMENT
           </span>
           <span class="text-xs text-gray-200 hidden sm:inline">
@@ -61,46 +73,48 @@
           </span>
         </div>
 
-        <div class="flex items-center gap-2 sm:gap-3">
-          <!-- Download Invoice PDF (jsPDF + html2canvas) -->
+        <div class="flex items-center gap-2 sm:gap-2.5">
+          <!-- PDF Button: Icon + "PDF" -->
           <button
             type="button"
             on:click={handleDownloadPdf}
             disabled={isGeneratingPdf}
-            class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-bold text-xs shadow-md hover:brightness-110 active:scale-95 transition disabled:opacity-50"
-            title="Download file Proforma Invoice PDF langsung ke perangkat"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-bold text-xs shadow-md hover:brightness-110 active:scale-95 transition disabled:opacity-50"
+            title="Download PDF"
           >
             {#if isGeneratingPdf}
               <svg class="animate-spin w-4 h-4 text-white" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
-              <span>Membuat PDF...</span>
+              <span>PDF...</span>
             {:else}
               <svg class="w-4 h-4 text-emerald-200" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
               </svg>
-              <span>Download PDF</span>
+              <span>PDF</span>
             {/if}
           </button>
 
-          <!-- Clean Isolated Print Button -->
+          <!-- Print Button: Icon + "Print" -->
           <button
             type="button"
             on:click={handlePrint}
-            class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#C88A2E] to-[#B07521] text-white font-bold text-xs shadow-md hover:brightness-110 active:scale-95 transition"
-            title="Buka dialog cetak printer A4 bebas background"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-[#C88A2E] to-[#B07521] text-white font-bold text-xs shadow-md hover:brightness-110 active:scale-95 transition"
+            title="Cetak Dokumen"
           >
             <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd"/>
             </svg>
-            <span class="hidden sm:inline">Cetak Dokumen</span>
+            <span>Print</span>
           </button>
 
+          <!-- Red Close Button -->
           <button
             type="button"
             on:click={closeModal}
-            class="p-2 text-gray-400 hover:text-white rounded-xl hover:bg-white/10"
+            class="p-1.5 text-rose-300 bg-rose-600/25 hover:bg-rose-600 hover:text-white rounded-xl border border-rose-500/50 transition shadow-sm"
+            title="Tutup (ESC / Klik Luar)"
             aria-label="Tutup"
           >
             <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
@@ -113,21 +127,28 @@
       <!-- Printable Invoice Paper (A4 Structured Layout) -->
       <div id="invoice-printable-area" class="p-6 sm:p-10 overflow-y-auto bg-white text-gray-900 font-sans print:p-0 print:m-0">
         
-        <!-- Corporate Letterhead Header -->
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 border-b-2 border-[#0B2D24] gap-4">
-          <div>
-            <PhoenixLogo size="lg" variant="dark" />
-            <h2 class="text-sm font-extrabold text-[#0B2D24] mt-2 uppercase tracking-wide">
-              PT. MATRISPAN EXIM PHOENIX CORP
-            </h2>
-            <p class="text-[11px] text-gray-600 max-w-md leading-relaxed">
-              Jl. Ir. H. Juanda No. 21 LK. II, Kota Binjai, Sumatera Utara 20714, Indonesia<br />
-              Email: {MEPC_OFFICIAL_EMAIL} | Telp/WA: {MEPC_ADMIN_DISPLAY_PHONE}
-            </p>
+        <!-- Corporate Letterhead Header: Clean separated layout, NO overlapping text -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-5 border-b-2 border-[#0B2D24] gap-4">
+          <div class="flex items-center gap-3.5">
+            <img
+              src="/logo.webp"
+              alt="Logo PT. MEPC"
+              class="w-14 h-14 object-contain flex-shrink-0 rounded-full border border-[#C88A2E]/40 p-1 bg-amber-50/30"
+              loading="eager"
+            />
+            <div>
+              <h2 class="text-base sm:text-lg font-black text-[#0B2D24] uppercase tracking-wide leading-tight">
+                PT. MATRISPAN EXIM PHOENIX CORP
+              </h2>
+              <p class="text-[11px] text-gray-600 leading-snug mt-1">
+                Jl. Ir. H. Juanda No. 21 LK. II, Kota Binjai, Sumatera Utara 20714, Indonesia<br />
+                Hub Ekspor: Pelabuhan Belawan (IDBLW) | Email: {MEPC_OFFICIAL_EMAIL} | Telp: {MEPC_ADMIN_DISPLAY_PHONE}
+              </p>
+            </div>
           </div>
 
-          <div class="text-left sm:text-right flex flex-col items-start sm:items-end">
-            <span class="px-3 py-1 rounded bg-[#0B2D24] text-white text-xs font-bold uppercase tracking-wider mb-1">
+          <div class="text-left sm:text-right flex flex-col items-start sm:items-end flex-shrink-0">
+            <span class="px-2.5 py-1 rounded bg-[#0B2D24] text-white text-xs font-bold uppercase tracking-wider mb-1">
               {$activeInvoice.payload.title}
             </span>
             <span class="text-xs font-bold text-[#C88A2E]">
@@ -148,7 +169,7 @@
           <div class="space-y-1">
             <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400 block">Diterbitkan Untuk:</span>
             <h4 class="text-sm font-bold text-gray-900">{$activeInvoice.payload.recipient_company}</h4>
-            <p class="text-gray-600">
+            <p class="text-gray-600 leading-relaxed">
               Attn: {$activeInvoice.payload.recipient_name}<br />
               Email: {$activeInvoice.payload.recipient_email || '-'}<br />
               WhatsApp: {$activeInvoice.payload.recipient_phone}<br />
@@ -159,7 +180,7 @@
           <!-- Shipping & Loading Logistics -->
           <div class="space-y-1 sm:text-right">
             <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400 block">Parameter Logistik:</span>
-            <p class="text-gray-700">
+            <p class="text-gray-700 leading-relaxed">
               <strong>Pelabuhan Muat:</strong> {$activeInvoice.payload.port_of_loading}<br />
               <strong>Pelabuhan Tujuan:</strong> {$activeInvoice.payload.destination_port}<br />
               <strong>Incoterms:</strong> <span class="font-bold text-[#C88A2E]">{$activeInvoice.payload.incoterms}</span><br />
@@ -243,10 +264,10 @@
 
           <!-- Digital Verification, QR Code & Official Stamp -->
           <div class="flex flex-col sm:items-end justify-between text-xs">
-            <div class="flex items-center gap-3 mb-4">
+            <div class="flex items-center gap-3 mb-3">
               <!-- Digital QR Code Vector Representation -->
-              <div class="w-16 h-16 bg-white p-1 rounded-lg border border-gray-300 shadow-sm flex items-center justify-center">
-                <svg class="w-14 h-14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <div class="w-14 h-14 bg-white p-1 rounded-lg border border-gray-300 shadow-sm flex items-center justify-center">
+                <svg class="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect x="3" y="3" width="7" height="7"></rect>
                   <rect x="14" y="3" width="7" height="7"></rect>
                   <rect x="14" y="14" width="7" height="7"></rect>
@@ -259,28 +280,33 @@
               </div>
               <div class="text-[10px] text-gray-500">
                 <span class="font-bold text-gray-800 block">Otorisasi Digital MEPC</span>
-                Terverifikasi secara kriptografis melalui sistem matrispanmepc.com
+                Terverifikasi secara kriptografis sistem MEPC
               </div>
             </div>
 
             <!-- Signature & Stamp Seal -->
-            <div class="text-center sm:text-right">
-              <span class="text-[11px] text-gray-500 block mb-2">Disahkan Oleh / Authorized by:</span>
+            <div class="text-left sm:text-right flex flex-col items-start sm:items-end">
+              <div class="text-xs font-medium text-gray-700 mb-1">
+                Binjai, Sumatera Utara, {$activeInvoice.payload.issued_date || '19 Oktober 2026'}
+              </div>
               
-              <!-- Red/Gold Official Seal SVG -->
-              <div class="inline-flex items-center gap-2 p-2 rounded-xl bg-amber-50 border border-[#C88A2E]/50">
-                <svg class="w-8 h-8 text-[#C88A2E]" viewBox="0 0 48 48" fill="none">
+              <!-- Official Seal Badge -->
+              <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-50/90 border border-[#C88A2E]/60 my-1 shadow-sm">
+                <svg class="w-7 h-7 text-[#C88A2E]" viewBox="0 0 48 48" fill="none">
                   <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="2" stroke-dasharray="3 2" />
                   <path d="M16 24L22 30L34 18" stroke="#16A34A" stroke-width="3" stroke-linecap="round" />
                 </svg>
                 <div class="text-left">
-                  <span class="text-[10px] font-extrabold text-[#0B2D24] uppercase block">CAP RESMI PT. MEPC</span>
-                  <span class="text-[9px] text-[#C88A2E] font-bold">APPROVED & VERIFIED</span>
+                  <span class="text-[10px] font-black text-[#0B2D24] uppercase block leading-none">CAP RESMI PT. MEPC</span>
+                  <span class="text-[9px] text-[#C88A2E] font-extrabold leading-none mt-0.5">VERIFIED & AUDITED</span>
                 </div>
               </div>
 
-              <div class="font-bold text-xs text-gray-900 mt-2">
-                {$activeInvoice.payload.authorized_signatory}
+              <div class="text-xs font-extrabold text-[#0B2D24] mt-2 leading-tight">
+                Direksi & Manajemen Operasional Ekspor
+              </div>
+              <div class="text-[10px] font-bold text-gray-600 mt-0.5">
+                PT. MATRISPAN EXIM PHOENIX CORP
               </div>
             </div>
 
@@ -296,100 +322,40 @@
 
 <style>
   @media print {
-    @page {
-      size: A4 portrait;
-      margin: 10mm 12mm 10mm 12mm;
+    @page { size: A4 portrait; margin: 8mm 10mm; }
+    :global(html), :global(body), :global(#app) {
+      background: #ffffff !important; color: #000000 !important;
+      margin: 0 !important; padding: 0 !important; width: 100% !important;
+      height: auto !important; overflow: visible !important;
+      -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important;
     }
-
-    :global(html),
-    :global(body),
-    :global(#app) {
-      background: #ffffff !important;
-      color: #000000 !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      width: 100% !important;
-      max-width: none !important;
-      min-height: 0 !important;
-      height: auto !important;
-      overflow: visible !important;
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
-    }
-
-    /* Hide background elements, layout navbar, sidebar, header, footer, etc. */
-    :global(main),
-    :global(aside),
-    :global(nav),
-    :global(header),
-    :global(footer),
-    :global(.no-print) {
+    :global(main), :global(aside), :global(nav), :global(header), :global(footer), :global(.no-print) {
       display: none !important;
     }
-
-    :global(.lg\:pl-72) {
-      padding-left: 0 !important;
-    }
-
+    :global(.lg\:pl-72) { padding-left: 0 !important; }
     #invoice-modal-root {
-      position: static !important;
-      inset: auto !important;
-      width: 100% !important;
-      min-height: 0 !important;
-      height: auto !important;
-      background: #ffffff !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      overflow: visible !important;
-      display: block !important;
-      z-index: auto !important;
+      position: static !important; inset: auto !important; width: 100% !important;
+      height: auto !important; background: #ffffff !important; padding: 0 !important;
+      margin: 0 !important; overflow: visible !important; display: block !important;
     }
-
     #invoice-card-container {
-      position: static !important;
-      max-width: 190mm !important;
-      width: 100% !important;
-      margin: 0 auto !important;
-      box-shadow: none !important;
-      border: none !important;
-      border-radius: 0 !important;
-      padding: 0 !important;
-      background: #ffffff !important;
-      max-height: none !important;
-      height: auto !important;
-      overflow: visible !important;
+      position: static !important; max-width: 190mm !important; width: 100% !important;
+      margin: 0 auto !important; box-shadow: none !important; border: none !important;
+      border-radius: 0 !important; padding: 0 !important; background: #ffffff !important;
+      max-height: none !important; height: auto !important; overflow: visible !important;
       display: block !important;
     }
-
     #invoice-printable-area {
-      position: static !important;
-      width: 100% !important;
-      max-width: 190mm !important;
-      margin: 0 auto !important;
-      padding: 0 !important;
-      box-sizing: border-box !important;
-      color: #111827 !important;
-      background: #ffffff !important;
-      overflow: visible !important;
+      position: static !important; width: 100% !important; max-width: 190mm !important;
+      margin: 0 auto !important; padding: 0 !important; box-sizing: border-box !important;
+      color: #111827 !important; background: #ffffff !important; overflow: visible !important;
       display: block !important;
     }
-
     #invoice-printable-area * {
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
+      -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important;
     }
-
-    table {
-      page-break-inside: auto;
-    }
-
-    tr {
-      page-break-inside: avoid;
-      page-break-after: auto;
-    }
-
-    thead {
-      display: table-header-group;
-    }
+    table { page-break-inside: auto; }
+    tr { page-break-inside: avoid; page-break-after: auto; }
+    thead { display: table-header-group; }
   }
 </style>
