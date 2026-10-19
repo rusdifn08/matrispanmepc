@@ -8,7 +8,7 @@
 
   const dispatch = createEventDispatcher<{
     openReport: 'orders' | 'suppliers' | 'balance';
-    changeMenu: string;
+    changeMenu: 'overview' | 'sales_analytics' | 'orders' | 'suppliers' | 'messages' | 'invoices' | 'catalog' | 'settings';
   }>();
 
   $: isOwner = currentUser?.role === 'SUPER_ADMIN';

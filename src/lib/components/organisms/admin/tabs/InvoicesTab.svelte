@@ -9,7 +9,7 @@
   const dispatch = createEventDispatcher<{
     openReport: 'balance';
     viewInvoice: any;
-    changeMenu: string;
+    changeMenu: 'overview' | 'sales_analytics' | 'orders' | 'suppliers' | 'messages' | 'invoices' | 'catalog' | 'settings';
   }>();
 
   $: isAuthorized = currentUser?.role === 'SUPER_ADMIN' || currentUser?.role === 'FINANCE_OFFICER';

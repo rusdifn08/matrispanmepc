@@ -2,6 +2,7 @@ import { writable } from 'svelte/store';
 import type { UserProfileDto } from '../types';
 import { apiClient } from '../api/client';
 import { toastAction } from './ui.store';
+import { securityActions } from './security.store';
 
 export const isAdminAuthenticated = writable<boolean>(false);
 export const isAdminLoginModalOpen = writable<boolean>(false);
@@ -60,6 +61,10 @@ export const authActions = {
     throw new Error('Respons pendaftaran tidak valid');
   },
 
+  async loadSecurityData() {
+    return securityActions.loadSecurityData();
+  },
+
   logout() {
     apiClient.setToken(null);
     currentUser.set(null);
@@ -68,3 +73,4 @@ export const authActions = {
     toastAction.show('Sesi telah diakhiri. Anda telah logout.', 'info');
   },
 };
+

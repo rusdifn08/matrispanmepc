@@ -44,7 +44,7 @@
 
   let isSidebarOpenMobile = false;
 
-  function setMenu(menu: typeof currentMenu) {
+  function setMenu(menu: typeof currentMenu | string | any) {
     adminDashboardMenu.set(menu);
   }
 
