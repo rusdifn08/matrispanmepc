@@ -178,7 +178,7 @@
   />
 
   <!-- Main Right Content Column with Left Offset for Fixed Sidebar -->
-  <div class="flex-1 flex flex-col min-w-0 min-h-screen pb-16 lg:pl-72">
+  <div class="flex-1 flex flex-col min-w-0 min-h-screen pb-16 lg:pl-72 print:p-0 print:m-0 print:min-h-0 print:block">
     <!-- Top Executive Header Bar -->
     <AdminHeader
       {isSyncing}

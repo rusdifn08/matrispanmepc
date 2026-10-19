@@ -13,8 +13,8 @@
 </script>
 
 {#if $activeModal === 'invoice' && $activeInvoice}
-  <div id="invoice-modal-root" class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
-    <div id="invoice-card-container" class="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden my-4 sm:my-8 animate-in fade-in zoom-in-95 duration-200 flex flex-col max-h-[92vh]">
+  <div id="invoice-modal-root" class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto print:static print:inset-auto print:p-0 print:m-0 print:bg-white print:overflow-visible print:block">
+    <div id="invoice-card-container" class="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden my-4 sm:my-8 animate-in fade-in zoom-in-95 duration-200 flex flex-col max-h-[92vh] print:static print:m-0 print:p-0 print:w-full print:max-w-none print:shadow-none print:border-none print:rounded-none print:overflow-visible print:max-h-none print:block">
       
       <!-- Top Action Bar (No-Print) -->
       <div class="no-print bg-[#0B2D24] text-white px-6 py-4 flex items-center justify-between border-b border-[#C88A2E]/40 flex-shrink-0">
@@ -243,17 +243,25 @@
       margin: 10mm 12mm 10mm 12mm;
     }
 
-    :global(body) {
+    :global(html),
+    :global(body),
+    :global(#app) {
       background: #ffffff !important;
       color: #000000 !important;
       margin: 0 !important;
       padding: 0 !important;
+      width: 100% !important;
+      max-width: none !important;
+      min-height: 0 !important;
+      height: auto !important;
+      overflow: visible !important;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
 
-    /* Hide background elements, layout navbar, footer, etc. */
-    :global(body > *:not(#invoice-modal-root)),
+    /* Hide background elements, layout navbar, sidebar, header, footer, etc. */
+    :global(main),
+    :global(aside),
     :global(nav),
     :global(header),
     :global(footer),
@@ -261,20 +269,26 @@
       display: none !important;
     }
 
+    :global(.lg\:pl-72) {
+      padding-left: 0 !important;
+    }
+
     #invoice-modal-root {
-      position: absolute !important;
-      left: 0 !important;
-      top: 0 !important;
+      position: static !important;
+      inset: auto !important;
       width: 100% !important;
-      background: transparent !important;
+      min-height: 0 !important;
+      height: auto !important;
+      background: #ffffff !important;
       padding: 0 !important;
       margin: 0 !important;
       overflow: visible !important;
       display: block !important;
-      z-index: 99999 !important;
+      z-index: auto !important;
     }
 
     #invoice-card-container {
+      position: static !important;
       max-width: 190mm !important;
       width: 100% !important;
       margin: 0 auto !important;
@@ -284,10 +298,13 @@
       padding: 0 !important;
       background: #ffffff !important;
       max-height: none !important;
+      height: auto !important;
       overflow: visible !important;
+      display: block !important;
     }
 
     #invoice-printable-area {
+      position: static !important;
       width: 100% !important;
       max-width: 190mm !important;
       margin: 0 auto !important;
@@ -296,6 +313,7 @@
       color: #111827 !important;
       background: #ffffff !important;
       overflow: visible !important;
+      display: block !important;
     }
 
     #invoice-printable-area * {

@@ -116,12 +116,29 @@
 
 /* Print Specific Rules for Official PDF / Proforma Invoices */
 @media print {
-  body {
+  html,
+  body,
+  #app {
     background-color: #ffffff !important;
+    background: #ffffff !important;
     color: #000000 !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    max-width: none !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    position: static !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
-  .no-print {
+  .no-print,
+  nav,
+  aside,
+  header,
+  footer {
     display: none !important;
   }
 
@@ -132,9 +149,5 @@
   .print-page-break {
     page-break-after: always;
   }
-
-  @page {
-    size: A4;
-    margin: 1.5cm;
-  }
 }
+

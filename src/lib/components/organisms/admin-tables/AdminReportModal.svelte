@@ -70,8 +70,8 @@
 </script>
 
 {#if isOpen}
-  <div id="admin-report-modal-root" class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
-    <div id="admin-report-card-container" class="relative w-full max-w-5xl bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden my-4 sm:my-8 flex flex-col max-h-[92vh]">
+  <div id="admin-report-modal-root" class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto print:static print:inset-auto print:p-0 print:m-0 print:bg-white print:overflow-visible print:block">
+    <div id="admin-report-card-container" class="relative w-full max-w-5xl bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden my-4 sm:my-8 flex flex-col max-h-[92vh] print:static print:m-0 print:p-0 print:w-full print:max-w-none print:shadow-none print:border-none print:rounded-none print:overflow-visible print:max-h-none print:block">
       
       <!-- TOP ACTION & CONFIG BAR (No-Print) -->
       <div class="no-print bg-[#0B2D24] text-white px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#C88A2E]/40 flex-shrink-0">
@@ -258,16 +258,25 @@
       margin: 8mm 10mm 8mm 10mm;
     }
 
-    :global(body) {
+    :global(html),
+    :global(body),
+    :global(#app) {
       background: #ffffff !important;
       color: #000000 !important;
       margin: 0 !important;
       padding: 0 !important;
+      width: 100% !important;
+      max-width: none !important;
+      min-height: 0 !important;
+      height: auto !important;
+      overflow: visible !important;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
 
-    :global(body > *:not(#admin-report-modal-root)),
+    /* Hide background elements, layout navbar, sidebar, header, footer, etc. */
+    :global(main),
+    :global(aside),
     :global(nav),
     :global(header),
     :global(footer),
@@ -275,20 +284,26 @@
       display: none !important;
     }
 
+    :global(.lg\:pl-72) {
+      padding-left: 0 !important;
+    }
+
     #admin-report-modal-root {
-      position: absolute !important;
-      left: 0 !important;
-      top: 0 !important;
+      position: static !important;
+      inset: auto !important;
       width: 100% !important;
-      background: transparent !important;
+      min-height: 0 !important;
+      height: auto !important;
+      background: #ffffff !important;
       padding: 0 !important;
       margin: 0 !important;
       overflow: visible !important;
       display: block !important;
-      z-index: 99999 !important;
+      z-index: auto !important;
     }
 
     #admin-report-card-container {
+      position: static !important;
       max-width: 100% !important;
       width: 100% !important;
       margin: 0 !important;
@@ -298,10 +313,13 @@
       padding: 0 !important;
       background: #ffffff !important;
       max-height: none !important;
+      height: auto !important;
       overflow: visible !important;
+      display: block !important;
     }
 
     #admin-report-printable-area {
+      position: static !important;
       width: 100% !important;
       max-width: 100% !important;
       margin: 0 !important;
@@ -310,6 +328,7 @@
       color: #111827 !important;
       background: #ffffff !important;
       overflow: visible !important;
+      display: block !important;
     }
 
     #admin-report-printable-area * {
