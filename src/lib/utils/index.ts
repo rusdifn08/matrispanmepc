@@ -111,3 +111,5 @@ export function playNotificationChime(): void {
     console.debug('Web Audio chime not permitted yet:', err);
   }
 }
+
+export * from './pdf-exporter';

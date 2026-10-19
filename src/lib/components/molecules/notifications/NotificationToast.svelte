@@ -3,7 +3,7 @@
 </script>
 
 {#if $notificationToast.show}
-  <div class="fixed top-20 right-4 z-50 max-w-md w-full animate-in fade-in slide-in-from-top-4 duration-300">
+  <div class="no-print fixed top-20 right-4 z-50 max-w-md w-full animate-in fade-in slide-in-from-top-4 duration-300">
     <div class="flex items-center gap-3 p-4 rounded-2xl shadow-2xl border backdrop-blur-md {$notificationToast.type === 'success' ? 'bg-[#0B2D24]/95 text-white border-[#C88A2E]/50' : $notificationToast.type === 'error' ? 'bg-rose-900/95 text-white border-rose-500/50' : 'bg-gray-900/95 text-white border-gray-700'}">
       <div class="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 {$notificationToast.type === 'success' ? 'bg-[#C88A2E] text-white' : 'bg-white/20 text-white'}">
         {#if $notificationToast.type === 'success'}

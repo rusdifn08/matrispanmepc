@@ -4,10 +4,13 @@
     supplierRequestsStore,
     invoicesStore,
     usdExchangeRate,
+    toastAction,
   } from '../../../stores';
   import {
     MEPC_OFFICIAL_EMAIL,
     MEPC_ADMIN_DISPLAY_PHONE,
+    exportElementToPdf,
+    printElementIsolated,
   } from '../../../utils';
   import PhoenixLogo from '../../atoms/icons/PhoenixLogo.svelte';
   import ReportOrdersTable from '../admin/reports/ReportOrdersTable.svelte';
@@ -25,9 +28,35 @@
 
   let orientation: 'landscape' | 'portrait' = 'landscape';
   let statusFilter = 'ALL';
+  let isGeneratingPdf = false;
+
+  async function handleDownloadPdf() {
+    if (isGeneratingPdf) return;
+    isGeneratingPdf = true;
+    toastAction.show('Menyusun file PDF resolusi tinggi (jsPDF + html2canvas)...', 'info');
+    try {
+      const filename = `MEPC_Laporan_${activeReportType.toUpperCase()}_${new Date().toISOString().slice(0, 10)}`;
+      const ok = await exportElementToPdf('admin-report-printable-area', {
+        filename,
+        orientation: orientation,
+        title: 'Laporan Resmi PT. MEPC',
+      });
+      if (ok) {
+        toastAction.show('File PDF resmi berhasil diunduh ke perangkat Anda!', 'success');
+      } else {
+        toastAction.show('Membuka dialog cetak bersih...', 'warning');
+        handlePrint();
+      }
+    } catch (e) {
+      console.error('PDF export error:', e);
+      handlePrint();
+    } finally {
+      isGeneratingPdf = false;
+    }
+  }
 
   function handlePrint() {
-    window.print();
+    printElementIsolated('admin-report-printable-area', 'Laporan Resmi PT. MEPC', orientation);
   }
 
   const currentDateFormatted = new Date().toLocaleDateString('id-ID', {
@@ -124,15 +153,39 @@
             <span>{orientation === 'landscape' ? '↔ Landscape' : '↕ Portrait'}</span>
           </button>
 
+          <!-- Download PDF (High-Res jsPDF + html2canvas) -->
+          <button
+            type="button"
+            on:click={handleDownloadPdf}
+            disabled={isGeneratingPdf}
+            class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-bold text-xs shadow-md hover:brightness-110 active:scale-95 transition disabled:opacity-50"
+            title="Download file PDF resmi beresolusi tinggi langsung ke perangkat"
+          >
+            {#if isGeneratingPdf}
+              <svg class="animate-spin w-4 h-4 text-white" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span>Membuat PDF...</span>
+            {:else}
+              <svg class="w-4 h-4 text-emerald-200" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
+              </svg>
+              <span>Download PDF</span>
+            {/if}
+          </button>
+
+          <!-- Clean Isolated Print -->
           <button
             type="button"
             on:click={handlePrint}
-            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#C88A2E] to-[#B07521] text-white font-bold shadow-md hover:brightness-110 transition"
+            class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#C88A2E] to-[#B07521] text-white font-bold text-xs shadow-md hover:brightness-110 active:scale-95 transition"
+            title="Buka dialog cetak printer A4 bebas background"
           >
             <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd"/>
             </svg>
-            <span>Cetak / PDF (A4)</span>
+            <span class="hidden sm:inline">Cetak Dokumen</span>
           </button>
 
           <button
