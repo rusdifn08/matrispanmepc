@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import ForsaIknBadge from '../../atoms/icons/ForsaIknBadge.svelte';
   import StatCard from '../../molecules/cards/StatCard.svelte';
 
   // Parallax states (mouse tracking + scroll tracking)
@@ -28,7 +27,7 @@
   });
 </script>
 
-<section id="hero" class="relative min-h-[94vh] w-full max-w-full flex items-center justify-center overflow-hidden bg-[#0B2D24] text-white">
+<section id="hero" class="relative min-h-[75vh] sm:min-h-[82vh] lg:min-h-[86vh] w-full max-w-full flex items-center justify-center overflow-hidden bg-[#0B2D24] text-white">
   
   <!-- Parallax High-Resolution Container Ship Hero Background with Faded Top Gradient -->
   <div
@@ -61,7 +60,7 @@
 
   <!-- Floating Dynamic Live Status Badge with Scroll & Mouse Parallax -->
   <div
-    class="hidden md:flex absolute top-28 right-12 z-20 items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl transition-transform duration-500 ease-out"
+    class="hidden md:flex absolute top-14 sm:top-16 lg:top-20 right-6 lg:right-12 z-20 items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl transition-transform duration-500 ease-out"
     style="transform: translate({mouseX * 15}px, {mouseY * 12 + scrollY * -0.25}px);"
   >
     <div class="w-8 h-8 rounded-xl bg-[#C88A2E]/25 border border-[#C88A2E] flex items-center justify-center text-[#C88A2E]">
@@ -76,28 +75,21 @@
     </div>
   </div>
 
-  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 flex flex-col items-center text-center">
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 lg:pt-10 pb-12 sm:pb-16 lg:pb-20 flex flex-col items-center text-center">
     
-    <!-- Strategic Partnership Badge with Hover Flare -->
-    <div class="mb-6 transform hover:scale-105 transition-transform duration-300 cursor-default">
-      <ForsaIknBadge />
-    </div>
-
-    <!-- Bilingual Corporate Tagline -->
-    <div class="inline-flex items-center gap-2 mb-4">
-      <span class="w-8 h-[2px] bg-[#C88A2E]"></span>
+    <!-- Bilingual Corporate Tagline (Clean, without dash lines) -->
+    <div class="inline-flex items-center justify-center mb-3 sm:mb-4">
       <span class="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-[#C88A2E] drop-shadow-sm">
         Purely Indonesian, Perfectly Global
       </span>
-      <span class="w-8 h-[2px] bg-[#C88A2E]"></span>
     </div>
 
     <!-- Main Hero Headline with Golden Glow Accent -->
-    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight max-w-4xl font-heading leading-tight mb-6 drop-shadow-md">
+    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight max-w-4xl font-heading leading-tight mb-4 sm:mb-6 drop-shadow-md">
       Bringing Indonesia's <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#FFE099] via-[#C88A2E] to-[#E5A84B] underline decoration-[#C88A2E]/40 decoration-wavy decoration-1">Finest Commodities</span> to the World
     </h1>
 
-    <p class="text-sm sm:text-base md:text-lg text-gray-200/90 max-w-2xl mx-auto mb-14 leading-relaxed font-normal">
+    <p class="text-sm sm:text-base md:text-lg text-gray-200/90 max-w-2xl mx-auto mb-10 sm:mb-12 leading-relaxed font-normal">
       Portal perdagangan ekspor B2B resmi <strong class="text-white font-semibold">PT. Matrispan Exim Phoenix Corp</strong>. Menghubungkan rempah nusantara, produk turunan kelapa, hasil laut beku berstandar rantai dingin, dan wastra tenun Sumatera dari Binjai langsung ke pembeli global via Pelabuhan Internasional Belawan.
     </p>
 

@@ -102,13 +102,13 @@
         <PhoenixLogo size="md" variant="light" />
       </a>
 
-      <!-- Desktop Navigation Menu (Active Section Tracking & Single Line) -->
-      <nav class="hidden xl:flex items-center gap-7 whitespace-nowrap">
+      <!-- Desktop Navigation Menu (Active Section Tracking & Responsive on All Desktop Zoom Levels) -->
+      <nav class="hidden min-[880px]:flex items-center gap-2.5 min-[990px]:gap-4 lg:gap-5 xl:gap-7 whitespace-nowrap">
         <!-- 1. Beranda -->
         <button
           type="button"
           on:click={() => scrollTo('hero')}
-          class="text-sm font-semibold tracking-wide transition-all py-2 relative {currentActiveSection === 'hero' && currentView === 'home' ? 'text-[#C88A2E] font-bold' : 'text-gray-200 hover:text-[#C88A2E]'}"
+          class="text-xs sm:text-[13px] lg:text-sm font-semibold tracking-wide transition-all py-1.5 lg:py-2 relative {currentActiveSection === 'hero' && currentView === 'home' ? 'text-[#C88A2E] font-bold' : 'text-gray-200 hover:text-[#C88A2E]'}"
         >
           Beranda
           {#if currentActiveSection === 'hero' && currentView === 'home'}
@@ -120,9 +120,10 @@
         <button
           type="button"
           on:click={() => scrollTo('commodities')}
-          class="text-sm font-semibold tracking-wide transition-all py-2 relative {currentActiveSection === 'commodities' && currentView === 'home' ? 'text-[#C88A2E] font-bold' : 'text-gray-200 hover:text-[#C88A2E]'}"
+          class="text-xs sm:text-[13px] lg:text-sm font-semibold tracking-wide transition-all py-1.5 lg:py-2 relative {currentActiveSection === 'commodities' && currentView === 'home' ? 'text-[#C88A2E] font-bold' : 'text-gray-200 hover:text-[#C88A2E]'}"
         >
-          Katalog Komoditas
+          <span class="hidden min-[1100px]:inline">Katalog Komoditas</span>
+          <span class="min-[1100px]:hidden">Katalog</span>
           {#if currentActiveSection === 'commodities' && currentView === 'home'}
             <span class="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#C88A2E] rounded-full shadow-[0_0_8px_#C88A2E]"></span>
           {/if}
@@ -132,9 +133,10 @@
         <button
           type="button"
           on:click={() => scrollTo('usp')}
-          class="text-sm font-semibold tracking-wide transition-all py-2 relative {currentActiveSection === 'usp' && currentView === 'home' ? 'text-[#C88A2E] font-bold' : 'text-gray-200 hover:text-[#C88A2E]'}"
+          class="text-xs sm:text-[13px] lg:text-sm font-semibold tracking-wide transition-all py-1.5 lg:py-2 relative {currentActiveSection === 'usp' && currentView === 'home' ? 'text-[#C88A2E] font-bold' : 'text-gray-200 hover:text-[#C88A2E]'}"
         >
-          Keunggulan Ekspor
+          <span class="hidden min-[1100px]:inline">Keunggulan Ekspor</span>
+          <span class="min-[1100px]:hidden">Keunggulan</span>
           {#if currentActiveSection === 'usp' && currentView === 'home'}
             <span class="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#C88A2E] rounded-full shadow-[0_0_8px_#C88A2E]"></span>
           {/if}
@@ -144,10 +146,11 @@
         <button
           type="button"
           on:click={() => scrollTo('belawan')}
-          class="text-sm font-semibold tracking-wide transition-all py-2 relative flex items-center gap-1.5 {currentActiveSection === 'belawan' && currentView === 'home' ? 'text-[#C88A2E] font-bold' : 'text-gray-200 hover:text-[#C88A2E]'}"
+          class="text-xs sm:text-[13px] lg:text-sm font-semibold tracking-wide transition-all py-1.5 lg:py-2 relative flex items-center gap-1.5 {currentActiveSection === 'belawan' && currentView === 'home' ? 'text-[#C88A2E] font-bold' : 'text-gray-200 hover:text-[#C88A2E]'}"
         >
-          <span>Akses Belawan (IDBLW)</span>
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>Akses Belawan</span>
+          <span class="hidden xl:inline">(IDBLW)</span>
+          <span class="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-emerald-400 animate-pulse"></span>
           {#if currentActiveSection === 'belawan' && currentView === 'home'}
             <span class="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#C88A2E] rounded-full shadow-[0_0_8px_#C88A2E]"></span>
           {/if}
@@ -157,12 +160,13 @@
         <button
           type="button"
           on:click={openSupplier}
-          class="text-sm font-semibold tracking-wide text-amber-300 hover:text-amber-200 transition-colors py-2 flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-400/10 border border-amber-300/30"
+          class="text-xs sm:text-[13px] lg:text-sm font-semibold tracking-wide text-amber-300 hover:text-amber-200 transition-colors flex items-center gap-1.5 px-2.5 py-1 lg:px-3 lg:py-1.5 rounded-xl bg-amber-400/10 border border-amber-300/30"
         >
-          <svg class="w-4 h-4 text-[#C88A2E]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 text-[#C88A2E]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
           </svg>
-          <span>Portal Suplai Petani</span>
+          <span class="hidden min-[1180px]:inline">Portal Suplai Petani</span>
+          <span class="min-[1180px]:hidden">Suplai Petani</span>
         </button>
       </nav>
 
@@ -205,11 +209,11 @@
           {/if}
         </button>
 
-        <!-- Mobile / Zoomed Hamburger Button (hidden on large desktop) -->
+        <!-- Mobile / Zoomed Hamburger Button (hidden on desktop and zoomed desktop down to 880px) -->
         <button
           type="button"
           on:click={() => (mobileMenuOpen = !mobileMenuOpen)}
-          class="xl:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 focus:outline-none transition-colors flex items-center justify-center flex-shrink-0"
+          class="min-[880px]:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 focus:outline-none transition-colors flex items-center justify-center flex-shrink-0"
           aria-label="Menu Navigasi"
         >
           <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -225,9 +229,9 @@
     </div>
   </div>
 
-  <!-- Mobile Collapsible Menu -->
+  <!-- Mobile Collapsible Menu (only on narrow mobile screens < 880px) -->
   {#if mobileMenuOpen}
-    <div class="xl:hidden bg-[#071f19] border-t border-white/10 px-4 pt-3 pb-6 space-y-2.5 animate-in fade-in duration-200">
+    <div class="min-[880px]:hidden bg-[#071f19] border-t border-white/10 px-4 pt-3 pb-6 space-y-2.5 animate-in fade-in duration-200">
       <button
         type="button"
         on:click={() => scrollTo('hero')}

@@ -1,6 +1,5 @@
 <script lang="ts">
   import PhoenixLogo from '../../atoms/icons/PhoenixLogo.svelte';
-  import ForsaIknBadge from '../../atoms/icons/ForsaIknBadge.svelte';
   import WhatsAppButton from '../../atoms/buttons/WhatsAppButton.svelte';
   import { MEPC_ADMIN_DISPLAY_PHONE, MEPC_OFFICIAL_EMAIL, MEPC_HEADQUARTERS } from '../../../utils';
   import { isAdminAuthenticated, isAdminLoginModalOpen } from '../../../stores';
@@ -26,9 +25,6 @@
         <p class="text-xs text-gray-300 leading-relaxed">
           PT. Matrispan Exim Phoenix Corp (PT. MEPC) adalah Global Export Trading House yang menghubungkan produk unggulan pertanian, perkebunan, dan maritim Indonesia langsung ke pasar internasional.
         </p>
-        <div class="pt-2">
-          <ForsaIknBadge size="sm" />
-        </div>
       </div>
 
       <!-- Column 2: 4 Core Export Sectors -->

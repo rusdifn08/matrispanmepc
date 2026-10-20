@@ -7,12 +7,10 @@
 
 <div class="flex flex-col gap-2 {align === 'center' ? 'items-center text-center' : align === 'right' ? 'items-end text-right' : 'items-start text-left'}">
   {#if subtitle}
-    <div class="inline-flex items-center gap-2">
-      <span class="w-6 h-[2px] bg-[#C88A2E]"></span>
+    <div class="inline-flex items-center">
       <span class="text-xs font-bold uppercase tracking-widest text-[#C88A2E]">
         {subtitle}
       </span>
-      <span class="w-6 h-[2px] bg-[#C88A2E]"></span>
     </div>
   {/if}
 
