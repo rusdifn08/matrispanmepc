@@ -60,7 +60,7 @@
 
   <!-- Floating Dynamic Live Status Badge with Scroll & Mouse Parallax -->
   <div
-    class="hidden md:flex absolute top-14 sm:top-16 lg:top-20 right-6 lg:right-12 z-20 items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl transition-transform duration-500 ease-out"
+    class="hidden md:flex absolute top-6 sm:top-7 lg:top-8 right-6 lg:right-12 z-20 items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl transition-transform duration-500 ease-out"
     style="transform: translate({mouseX * 15}px, {mouseY * 12 + scrollY * -0.25}px);"
   >
     <div class="w-8 h-8 rounded-xl bg-[#C88A2E]/25 border border-[#C88A2E] flex items-center justify-center text-[#C88A2E]">
